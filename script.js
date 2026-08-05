@@ -18,11 +18,11 @@
     { name:'Chaves Imobiliária', cat:'Serviços Imobiliários', file:'mono/chaves-imobiliaria.png' },
     { name:'Dicastanha', cat:'Fotografia Imobiliária', file:'mono/dicastanha.png', fit:.62 },
     { name:'Legacy Brokers', cat:'Brokers', file:'mono/legacy-brokers.png' },
-    { name:'Lúcia Haddad', cat:'Imóveis de Luxo', file:'mono/lucia-haddad.png' },
-    { name:'Mavesol', cat:'Imóveis', file:'mono/mavesol.png' },
-    { name:'Prateleira dos Imóveis', cat:'Imobiliária', file:'mono/prateleira-dos-imoveis.png' },
-    { name:'Prime To Place', cat:'Real Estate & Co.', file:'mono/prime-to-place.png' },
-    { name:'Z1', cat:'Boutique de Imóveis', file:'mono/z1.png' },
+    { name:'Lúcia Haddad', cat:'Imóveis de Luxo', file:'mono/lucia-haddad.png', project:'lucia-haddad' },
+    { name:'Mavesol', cat:'Imóveis', file:'mono/mavesol.png', project:'mavesol' },
+    { name:'Prateleira dos Imóveis', cat:'Imobiliária', file:'mono/prateleira-dos-imoveis.png', project:'prateleira-dos-imoveis' },
+    { name:'Prime To Place', cat:'Real Estate & Co.', file:'mono/prime-to-place.png', project:'prime-to-place' },
+    { name:'Z1', cat:'Boutique de Imóveis', file:'mono/z1.png', project:'z1' },
     { name:'Zero Onze', cat:'Imóveis', file:'zero-onze.svg', invert:true, fit:.6 },
   ];
 
@@ -128,7 +128,7 @@
   const clientsGrid = document.getElementById('clientsGrid');
   CLIENTS.forEach((c, i) => {
     const div = document.createElement('div');
-    div.className = 'client-card';
+    div.className = 'client-card' + (c.project ? ' client-card--linked' : '');
     const fit = c.fit || .9;
     const styles = [`max-width:${fit*100}%`, `max-height:${fit*100}%`];
     if (c.invert) styles.push('filter:invert(1)');
@@ -142,6 +142,9 @@
         <span class="client-cat">${c.cat}</span>
       </div>
     `;
+    if (c.project) {
+      div.addEventListener('click', () => openCase(c.project));
+    }
     clientsGrid.appendChild(div);
   });
 
@@ -153,6 +156,7 @@
   const caseTags = document.getElementById('caseTags');
   const caseGallery = document.getElementById('caseGallery');
   const caseVideo = document.getElementById('caseVideo');
+  const caseMore = document.getElementById('caseMore');
   const caseClose = document.getElementById('caseClose');
 
   let currentProject = null;
@@ -194,6 +198,25 @@
     `).join('');
     caseGallery.querySelectorAll('figure').forEach(fig => {
       fig.addEventListener('click', () => openLightbox(project, Number(fig.dataset.index)));
+    });
+
+    const others = PROJECTS.filter(p => p.id !== project.id);
+    caseMore.innerHTML = `
+      <span class="case-more-label">Outros projetos</span>
+      <div class="case-more-list">
+        ${others.map(p => `
+          <div class="case-more-item" data-id="${p.id}">
+            <div class="case-more-thumb">
+              <img src="${projectPhotos(p)[0]}" alt="" loading="lazy" decoding="async">
+            </div>
+            <span class="case-more-name">${p.name}</span>
+            <span class="case-more-arrow">↗</span>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    caseMore.querySelectorAll('.case-more-item').forEach(item => {
+      item.addEventListener('click', () => openCase(item.dataset.id));
     });
 
     caseOverlay.classList.add('open');

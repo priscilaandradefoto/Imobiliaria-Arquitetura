@@ -279,6 +279,7 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
   box-sizing:border-box;
   text-align:center;
 }
+.client-card--linked{ cursor:pointer; }
 .client-index{
   position:absolute; top:.7rem; left:.8rem;
   font-size:.68rem; color:var(--ink-faint); font-variant-numeric:tabular-nums; letter-spacing:.04em;
@@ -299,8 +300,8 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
   font-size:.64rem; color:var(--ink-faint); letter-spacing:.02em;
 }
 @media (hover:hover){
-  .client-card:hover .client-mark img{ transform:scale(1.06); }
-  .client-card:hover .client-name{ color:var(--gold); }
+  .client-card--linked:hover .client-mark img{ transform:scale(1.06); }
+  .client-card--linked:hover .client-name{ color:var(--gold); }
 }
 
 /* ============ CONTATO ============ */
@@ -406,6 +407,31 @@ a.contato-item:hover{ padding-left:.6rem; color:#e6c99a; }
 }
 .case-gallery figure:hover img{ transform:scale(1.045); }
 .case-gallery figure:nth-child(3n+1){ grid-column:span 1; }
+
+.case-more{ margin-top:4rem; padding-top:2.5rem; border-top:1px solid var(--gold-line); }
+.case-more-label{
+  display:block; font-size:.72rem; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--gold); font-weight:600; margin-bottom:1.25rem;
+}
+.case-more-list{ display:flex; flex-direction:column; }
+.case-more-item{
+  display:flex; align-items:center; gap:1rem; padding:1rem 0;
+  border-bottom:1px solid var(--gold-line); cursor:pointer;
+}
+.case-more-thumb{
+  width:56px; height:56px; border-radius:2px; overflow:hidden; flex-shrink:0; background:var(--bg-raised);
+}
+.case-more-thumb img{ width:100%; height:100%; object-fit:cover; }
+.case-more-name{
+  font-family:var(--serif); font-weight:500; font-size:clamp(1.15rem,3vw,1.5rem);
+  flex:1; transition:color .3s var(--ease);
+}
+.case-more-arrow{
+  font-family:var(--serif); font-size:1.3rem; color:var(--ink-faint);
+  transition:transform .3s var(--ease);
+}
+.case-more-item:hover .case-more-name{ color:var(--gold); }
+.case-more-item:hover .case-more-arrow{ transform:translate(3px,-3px); }
 
 /* ============ LIGHTBOX ============ */
 .lightbox{
