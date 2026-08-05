@@ -246,9 +246,15 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
   padding:clamp(4rem,10vw,7rem) clamp(1.25rem,4vw,3rem);
 }
 .clients-grid{
-  --cols:6;
+  --cols:2;
   display:flex; flex-wrap:wrap; justify-content:center; align-content:flex-start;
   margin-top:2.5rem;
+}
+@media (min-width:640px){
+  .clients-grid{ --cols:3; }
+}
+@media (min-width:900px){
+  .clients-grid{ --cols:6; }
 }
 .client-card{
   position:relative; background:var(--bg);
