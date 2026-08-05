@@ -9,7 +9,7 @@
     { id:'prime-to-place', name:'Prime To Place', tags:['Real Estate','Still'], folder:'prime-to-place', count:10 },
     { id:'kora', name:'Kora', tags:['Arquitetura','Residencial'], folder:'kora', count:4 },
     { id:'mavesol', name:'Mavesol', tags:['Imóveis','Residencial'], folder:'mavesol', count:4 },
-    { id:'imovel-a', name:'Imóvel A', tags:['Residencial','Still'], folder:'imovel-a', count:3 },
+    { id:'imovel-a', name:'Imóvel A', tags:['Residencial','Still','Vídeo'], folder:'imovel-a', count:3, video:'1215884469', videoRatio:'240/426' },
   ];
 
   const CLIENTS = [
@@ -178,7 +178,7 @@
           <img src="${photos[0] || ''}" alt="" loading="lazy" decoding="async">
         </div>
         <div class="case-video-frame" style="--video-ratio:${project.videoRatio || '9/16'}">
-          <iframe src="https://player.vimeo.com/video/${project.video}?title=0&byline=0&portrait=0&autoplay=1&muted=1&loop=1"
+          <iframe src="https://player.vimeo.com/video/${project.video}?background=1&title=0&byline=0&portrait=0&autoplay=1&muted=1&loop=1"
             allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"
             title="${project.name} — vídeo"></iframe>
         </div>
