@@ -4,7 +4,7 @@
   /* ============ DATA ============ */
   const PROJECTS = [
     { id:'lucia-haddad', name:'Lúcia Haddad', tags:['Imóveis de Luxo','Still'], folder:'lucia-haddad', count:7 },
-    { id:'prateleira-dos-imoveis', name:'Prateleira dos Imóveis', tags:['Fotografia Imobiliária','Still'], folder:'prateleira-dos-imoveis', count:11 },
+    { id:'prateleira-dos-imoveis', name:'Prateleira dos Imóveis', tags:['Fotografia Imobiliária','Still','Vídeo'], folder:'prateleira-dos-imoveis', count:11, video:'1215877157' },
     { id:'z1', name:'Z1 Boutique de Imóveis', tags:['Boutique Imobiliária','Still'], folder:'z1', count:11 },
     { id:'prime-to-place', name:'Prime To Place', tags:['Real Estate','Still'], folder:'prime-to-place', count:10 },
     { id:'kora', name:'Kora', tags:['Arquitetura','Residencial'], folder:'kora', count:4 },
@@ -42,13 +42,14 @@
     navToggle.setAttribute('aria-expanded','false');
     mobileNav.classList.remove('open');
     mobileNav.setAttribute('aria-hidden','true');
-    document.body.classList.remove('no-scroll');
+    document.body.classList.remove('no-scroll', 'nav-open');
   };
   navToggle.addEventListener('click', () => {
     const isOpen = mobileNav.classList.toggle('open');
     navToggle.setAttribute('aria-expanded', String(isOpen));
     mobileNav.setAttribute('aria-hidden', String(!isOpen));
     document.body.classList.toggle('no-scroll', isOpen);
+    document.body.classList.toggle('nav-open', isOpen);
   });
   mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileNav));
 
@@ -151,6 +152,7 @@
   const caseTitle = document.getElementById('caseTitle');
   const caseTags = document.getElementById('caseTags');
   const caseGallery = document.getElementById('caseGallery');
+  const caseVideo = document.getElementById('caseVideo');
   const caseClose = document.getElementById('caseClose');
 
   let currentProject = null;
@@ -167,6 +169,14 @@
     caseTitle.textContent = project.name;
     caseWatermark.textContent = project.name;
     caseTags.innerHTML = project.tags.map(t => `<span>${t}</span>`).join('');
+
+    caseVideo.innerHTML = project.video ? `
+      <div class="case-video-frame">
+        <iframe src="https://player.vimeo.com/video/${project.video}?title=0&byline=0&portrait=0"
+          allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"
+          title="${project.name} — vídeo"></iframe>
+      </div>
+    ` : '';
 
     const photos = projectPhotos(project);
     caseGallery.innerHTML = photos.map((src, i) => `
