@@ -1,5 +1,6 @@
 /* ============ TOKENS ============ */
 :root{
+  color-scheme: light;
   --bg: #F3EEE4;
   --bg-raised: #ece5d5;
   --ink: #1B1A18;
@@ -327,12 +328,23 @@ a.contato-item:hover{ padding-left:.6rem; color:#e6c99a; }
 /* ============ WHATSAPP FLOAT ============ */
 .whatsapp-float{
   position:fixed; right:1.25rem; bottom:1.25rem; z-index:300;
-  width:56px; height:56px; border-radius:50%; background:#25D366; color:#fff;
+  width:34px; height:34px; border-radius:50%; background:#25D366; color:#fff;
   display:flex; align-items:center; justify-content:center;
   box-shadow:0 10px 26px -6px rgba(37,211,102,.55);
   transition:transform .35s var(--ease), box-shadow .35s var(--ease);
 }
 .whatsapp-float:hover{ transform:scale(1.08); box-shadow:0 14px 32px -6px rgba(37,211,102,.7); }
+
+/* ============ INSTAGRAM FLOAT ============ */
+.instagram-float{
+  position:fixed; right:1.25rem; bottom:3.75rem; z-index:300;
+  width:34px; height:34px; border-radius:50%; color:#fff;
+  background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 10px 26px -6px rgba(214,36,159,.5);
+  transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+.instagram-float:hover{ transform:scale(1.08); box-shadow:0 14px 32px -6px rgba(214,36,159,.65); }
 
 /* ============ CASE OVERLAY ============ */
 .case-overlay{
