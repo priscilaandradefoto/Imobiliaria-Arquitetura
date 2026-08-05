@@ -4,7 +4,7 @@
   /* ============ DATA ============ */
   const PROJECTS = [
     { id:'lucia-haddad', name:'Lúcia Haddad', tags:['Imóveis de Luxo','Still'], folder:'lucia-haddad', count:7 },
-    { id:'prateleira-dos-imoveis', name:'Prateleira dos Imóveis', tags:['Fotografia Imobiliária','Still','Vídeo'], folder:'prateleira-dos-imoveis', count:11, video:'1215877157' },
+    { id:'prateleira-dos-imoveis', name:'Prateleira dos Imóveis', tags:['Fotografia Imobiliária','Still','Vídeo'], folder:'prateleira-dos-imoveis', count:11, video:'1215877157', videoRatio:'240/426' },
     { id:'z1', name:'Z1 Boutique de Imóveis', tags:['Boutique Imobiliária','Still'], folder:'z1', count:11 },
     { id:'prime-to-place', name:'Prime To Place', tags:['Real Estate','Still'], folder:'prime-to-place', count:10 },
     { id:'kora', name:'Kora', tags:['Arquitetura','Residencial'], folder:'kora', count:4 },
@@ -170,15 +170,23 @@
     caseWatermark.textContent = project.name;
     caseTags.innerHTML = project.tags.map(t => `<span>${t}</span>`).join('');
 
+    const photos = projectPhotos(project);
+
     caseVideo.innerHTML = project.video ? `
-      <div class="case-video-frame">
-        <iframe src="https://player.vimeo.com/video/${project.video}?title=0&byline=0&portrait=0"
-          allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"
-          title="${project.name} — vídeo"></iframe>
+      <div class="case-video-row">
+        <div class="case-video-side">
+          <img src="${photos[0] || ''}" alt="" loading="lazy" decoding="async">
+        </div>
+        <div class="case-video-frame" style="--video-ratio:${project.videoRatio || '9/16'}">
+          <iframe src="https://player.vimeo.com/video/${project.video}?title=0&byline=0&portrait=0&autoplay=1&muted=1&loop=1"
+            allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"
+            title="${project.name} — vídeo"></iframe>
+        </div>
+        <div class="case-video-side">
+          <img src="${photos[1] || ''}" alt="" loading="lazy" decoding="async">
+        </div>
       </div>
     ` : '';
-
-    const photos = projectPhotos(project);
     caseGallery.innerHTML = photos.map((src, i) => `
       <figure data-index="${i}">
         <img src="${src}" alt="${project.name} — foto ${i+1}" loading="lazy" decoding="async">
