@@ -1,0 +1,265 @@
+(() => {
+  'use strict';
+
+  /* ============ DATA ============ */
+  const PROJECTS = [
+    { id:'lucia-haddad', name:'Lúcia Haddad', tags:['Imóveis de Luxo','Still'], folder:'lucia-haddad', count:7 },
+    { id:'prateleira-dos-imoveis', name:'Prateleira dos Imóveis', tags:['Fotografia Imobiliária','Still'], folder:'prateleira-dos-imoveis', count:11 },
+    { id:'z1', name:'Z1 Boutique de Imóveis', tags:['Boutique Imobiliária','Still'], folder:'z1', count:11 },
+    { id:'prime-to-place', name:'Prime To Place', tags:['Real Estate','Still'], folder:'prime-to-place', count:10 },
+    { id:'kora', name:'Kora', tags:['Arquitetura','Residencial'], folder:'kora', count:4 },
+    { id:'mavesol', name:'Mavesol', tags:['Imóveis','Residencial'], folder:'mavesol', count:4 },
+    { id:'imovel-a', name:'Imóvel A', tags:['Residencial','Still'], folder:'imovel-a', count:3 },
+  ];
+
+  const CLIENTS = [
+    { name:'Abyara Prontos', cat:'Imobiliária', file:'mono/abyara-prontos.png' },
+    { name:'Casas Bacanas', cat:'Imobiliária', file:'mono/casas-bacanas.png', fit:.66 },
+    { name:'Chaves Imobiliária', cat:'Serviços Imobiliários', file:'mono/chaves-imobiliaria.png' },
+    { name:'Dicastanha', cat:'Fotografia Imobiliária', file:'mono/dicastanha.png', fit:.62 },
+    { name:'Legacy Brokers', cat:'Brokers', file:'mono/legacy-brokers.png' },
+    { name:'Lúcia Haddad', cat:'Imóveis de Luxo', file:'mono/lucia-haddad.png' },
+    { name:'Mavesol', cat:'Imóveis', file:'mono/mavesol.png' },
+    { name:'Prateleira dos Imóveis', cat:'Imobiliária', file:'mono/prateleira-dos-imoveis.png' },
+    { name:'Prime To Place', cat:'Real Estate & Co.', file:'mono/prime-to-place.png' },
+    { name:'Z1', cat:'Boutique de Imóveis', file:'mono/z1.png' },
+    { name:'Zero Onze', cat:'Imóveis', file:'zero-onze.svg', invert:true, fit:.6 },
+  ];
+
+  const pad = n => String(n).padStart(2,'0');
+  const projectPhotos = p => Array.from({length:p.count}, (_,i) => `${p.folder}/${p.folder}-${pad(i+1)}.jpg`);
+
+  /* ============ HEADER SCROLL STATE ============ */
+  const header = document.getElementById('siteHeader');
+  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 40);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive:true });
+
+  /* ============ MOBILE NAV ============ */
+  const navToggle = document.getElementById('navToggle');
+  const mobileNav = document.getElementById('mobileNav');
+  const closeMobileNav = () => {
+    navToggle.setAttribute('aria-expanded','false');
+    mobileNav.classList.remove('open');
+    mobileNav.setAttribute('aria-hidden','true');
+    document.body.classList.remove('no-scroll');
+  };
+  navToggle.addEventListener('click', () => {
+    const isOpen = mobileNav.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+    mobileNav.setAttribute('aria-hidden', String(!isOpen));
+    document.body.classList.toggle('no-scroll', isOpen);
+  });
+  mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileNav));
+
+  /* ============ REVEAL ON SCROLL ============ */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); } });
+  }, { threshold:.12, rootMargin:'0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ============ PORTFOLIO LIST ============ */
+  const listEl = document.getElementById('portfolioList');
+  PROJECTS.forEach((p, i) => {
+    const photos = projectPhotos(p);
+    const li = document.createElement('li');
+    li.className = 'portfolio-row';
+    li.dataset.id = p.id;
+    li.innerHTML = `
+      <div class="portfolio-row-inner">
+        <span class="portfolio-index">${pad(i+1)}</span>
+        <div class="portfolio-thumb-mobile">
+          <img src="${photos[0]}" alt="" loading="lazy" decoding="async">
+        </div>
+        <h3 class="portfolio-name">${p.name}</h3>
+        <div class="portfolio-tags">${p.tags.map(t=>`<span>${t}</span>`).join('')}</div>
+        <span class="portfolio-arrow">↗</span>
+      </div>
+    `;
+    li.addEventListener('click', () => openCase(p.id));
+    listEl.appendChild(li);
+  });
+
+  /* ============ FLOATING PHOTO (desktop hover-follow) ============ */
+  const canHoverFine = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+  if (canHoverFine) {
+    const floatEl = document.getElementById('portfolioFloat');
+    const floatImg = document.getElementById('portfolioFloatImg');
+    const portfolioSection = document.getElementById('portfolio');
+    let targetX = 0, targetY = 0, curX = 0, curY = 0, raf = null, active = false;
+
+    const loop = () => {
+      curX += (targetX - curX) * 0.16;
+      curY += (targetY - curY) * 0.16;
+      floatEl.style.left = curX + 'px';
+      floatEl.style.top = curY + 'px';
+      if (active || Math.abs(targetX-curX) > .5 || Math.abs(targetY-curY) > .5) {
+        raf = requestAnimationFrame(loop);
+      } else {
+        raf = null;
+      }
+    };
+    const ensureLoop = () => { if (!raf) raf = requestAnimationFrame(loop); };
+
+    portfolioSection.addEventListener('mousemove', e => {
+      targetX = e.clientX; targetY = e.clientY;
+      ensureLoop();
+    });
+
+    listEl.querySelectorAll('.portfolio-row').forEach(row => {
+      const project = PROJECTS.find(p => p.id === row.dataset.id);
+      const cover = projectPhotos(project)[0];
+      row.addEventListener('mouseenter', () => {
+        floatImg.src = cover;
+        floatEl.classList.add('active');
+        active = true;
+        ensureLoop();
+      });
+      row.addEventListener('mouseleave', () => {
+        floatEl.classList.remove('active');
+        active = false;
+        ensureLoop();
+      });
+    });
+  }
+
+  /* ============ CLIENTS GRID ============ */
+  const clientsGrid = document.getElementById('clientsGrid');
+  CLIENTS.forEach((c, i) => {
+    const div = document.createElement('div');
+    div.className = 'client-card';
+    const fit = c.fit || .9;
+    const styles = [`max-width:${fit*100}%`, `max-height:${fit*100}%`];
+    if (c.invert) styles.push('filter:invert(1)');
+    div.innerHTML = `
+      <span class="client-index">${pad(i+1)}</span>
+      <div class="client-mark">
+        <img src="logos-padronizados/${c.file}" alt="Logo ${c.name}" loading="lazy" decoding="async" style="${styles.join(';')}">
+      </div>
+      <div class="client-caption">
+        <span class="client-name">${c.name}</span>
+        <span class="client-cat">${c.cat}</span>
+      </div>
+    `;
+    clientsGrid.appendChild(div);
+  });
+
+  /* ============ CASE OVERLAY ============ */
+  const caseOverlay = document.getElementById('caseOverlay');
+  const caseWatermark = document.getElementById('caseWatermark');
+  const caseIndex = document.getElementById('caseIndex');
+  const caseTitle = document.getElementById('caseTitle');
+  const caseTags = document.getElementById('caseTags');
+  const caseGallery = document.getElementById('caseGallery');
+  const caseClose = document.getElementById('caseClose');
+
+  let currentProject = null;
+  let lastFocused = null;
+
+  function openCase(id) {
+    const project = PROJECTS.find(p => p.id === id);
+    if (!project) return;
+    currentProject = project;
+    lastFocused = document.activeElement;
+
+    const idx = PROJECTS.indexOf(project) + 1;
+    caseIndex.textContent = `Projeto ${pad(idx)} / ${pad(PROJECTS.length)}`;
+    caseTitle.textContent = project.name;
+    caseWatermark.textContent = project.name;
+    caseTags.innerHTML = project.tags.map(t => `<span>${t}</span>`).join('');
+
+    const photos = projectPhotos(project);
+    caseGallery.innerHTML = photos.map((src, i) => `
+      <figure data-index="${i}">
+        <img src="${src}" alt="${project.name} — foto ${i+1}" loading="lazy" decoding="async">
+      </figure>
+    `).join('');
+    caseGallery.querySelectorAll('figure').forEach(fig => {
+      fig.addEventListener('click', () => openLightbox(project, Number(fig.dataset.index)));
+    });
+
+    caseOverlay.classList.add('open');
+    caseOverlay.setAttribute('aria-hidden','false');
+    document.body.classList.add('no-scroll');
+    caseOverlay.scrollTop = 0;
+    caseClose.focus();
+  }
+
+  function closeCase() {
+    caseOverlay.classList.remove('open');
+    caseOverlay.setAttribute('aria-hidden','true');
+    document.body.classList.remove('no-scroll');
+    if (lastFocused) lastFocused.focus();
+  }
+  caseClose.addEventListener('click', closeCase);
+  caseOverlay.addEventListener('click', e => { if (e.target === caseOverlay) closeCase(); });
+
+  /* ============ LIGHTBOX ============ */
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxCounter = document.getElementById('lightboxCounter');
+  const lightboxClose = document.getElementById('lightboxClose');
+  const lightboxPrev = document.getElementById('lightboxPrev');
+  const lightboxNext = document.getElementById('lightboxNext');
+
+  let lbProject = null, lbIndex = 0;
+
+  function renderLightbox() {
+    const photos = projectPhotos(lbProject);
+    lightboxImg.src = photos[lbIndex];
+    lightboxImg.alt = `${lbProject.name} — foto ${lbIndex+1}`;
+    lightboxCounter.textContent = `${pad(lbIndex+1)} / ${pad(photos.length)}`;
+  }
+
+  function openLightbox(project, index) {
+    lbProject = project; lbIndex = index;
+    renderLightbox();
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden','false');
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden','true');
+  }
+  function stepLightbox(dir) {
+    const total = lbProject.count;
+    lbIndex = (lbIndex + dir + total) % total;
+    renderLightbox();
+  }
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightboxPrev.addEventListener('click', () => stepLightbox(-1));
+  lightboxNext.addEventListener('click', () => stepLightbox(1));
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+
+  /* keyboard: arrows + escape, lightbox takes priority over case overlay */
+  window.addEventListener('keydown', e => {
+    if (lightbox.classList.contains('open')) {
+      if (e.key === 'Escape') closeLightbox();
+      else if (e.key === 'ArrowLeft') stepLightbox(-1);
+      else if (e.key === 'ArrowRight') stepLightbox(1);
+    } else if (caseOverlay.classList.contains('open')) {
+      if (e.key === 'Escape') closeCase();
+    }
+  });
+
+  /* touch swipe for lightbox */
+  let touchStartX = 0, touchStartY = 0;
+  lightbox.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].clientX;
+    touchStartY = e.changedTouches[0].clientY;
+  }, { passive:true });
+  lightbox.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+      stepLightbox(dx < 0 ? 1 : -1);
+    } else if (Math.abs(dy) > 80 && Math.abs(dy) > Math.abs(dx)) {
+      closeLightbox();
+    }
+  }, { passive:true });
+
+  /* ============ FOOTER YEAR ============ */
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+})();

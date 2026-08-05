@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Priscila Andrade — Fotografia &amp; Vídeo para Imóveis e Arquitetura</title>
+<meta name="description" content="Priscila Andrade, fotógrafa e videomaker especializada em imóveis e arquitetura. Atendimento em Itapema, Balneário Camboriú e Porto Belo, SC.">
+<meta property="og:title" content="Priscila Andrade — Fotografia & Vídeo para Imóveis e Arquitetura">
+<meta property="og:description" content="Contando a história dos espaços através da fotografia e do vídeo.">
+<meta property="og:image" content="kora/kora-01.jpg">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="grain"></div>
+
+<header class="site-header" id="siteHeader">
+  <a href="#top" class="brand">Priscila Andrade</a>
+  <nav class="main-nav" id="mainNav">
+    <a href="#sobre" class="nav-link">Sobre</a>
+    <a href="#portfolio" class="nav-link">Portfólio</a>
+    <a href="#clientes" class="nav-link">Clientes</a>
+    <a href="#contato" class="nav-link">Contato</a>
+  </nav>
+  <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<div class="mobile-nav" id="mobileNav" aria-hidden="true">
+  <a href="#sobre" class="mobile-nav-link">Sobre</a>
+  <a href="#portfolio" class="mobile-nav-link">Portfólio</a>
+  <a href="#clientes" class="mobile-nav-link">Clientes</a>
+  <a href="#contato" class="mobile-nav-link">Contato</a>
+  <a href="https://wa.me/5511974807165" class="mobile-nav-cta" target="_blank" rel="noopener">Falar no WhatsApp</a>
+</div>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-media">
+      <img src="kora/kora-01.jpg" alt="" class="hero-img" fetchpriority="high">
+      <div class="hero-scrim"></div>
+    </div>
+    <div class="hero-watermark" aria-hidden="true">Priscila</div>
+    <div class="hero-content">
+      <p class="hero-eyebrow reveal">Fotografia &amp; Vídeo · Imóveis e Arquitetura</p>
+      <h1 class="hero-headline reveal">Contando a história dos espaços através da fotografia e do vídeo.</h1>
+      <a href="#portfolio" class="hero-scroll reveal">
+        <span>Ver portfólio</span>
+        <svg width="14" height="22" viewBox="0 0 14 22" fill="none"><path d="M7 1V21M7 21L1 15M7 21L13 15" stroke="currentColor" stroke-width="1.2"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section class="sobre" id="sobre">
+    <div class="sobre-photo reveal">
+      <img src="logos-padronizados/priscila-andrade.jpg" alt="Priscila Andrade, fotógrafa e videomaker, fotografando com câmera profissional" loading="lazy" decoding="async">
+    </div>
+    <div class="sobre-content">
+      <span class="section-tag reveal">Sobre</span>
+      <h2 class="section-title reveal">Priscila Andrade</h2>
+      <p class="sobre-text reveal">Sou Priscila Andrade, fotógrafa e videomaker especializada em imóveis e arquitetura. Paulistana de nascimento, hoje vivo em Itapema, Santa Catarina.</p>
+      <p class="sobre-text sobre-text--lead reveal">Área de atuação: Itapema, Balneário Camboriú, Porto Belo e região — atendendo imobiliárias, incorporadoras e corretores.</p>
+      <p class="sobre-text reveal">Com 15 anos de experiência, já assinei a produção fotográfica e audiovisual de nomes como Prateleira dos Imóveis, Dicastanha Fotografia Imobiliária, Casas Bacanas, Legacy Brokers e Abyara Prontos, entre outros — unindo técnica, luz e composição para valorizar cada imóvel e ajudar o time comercial a vender mais rápido.</p>
+      <div class="sobre-services reveal">
+        <p class="sobre-services-lead">Meu trabalho é focado no mercado imobiliário:</p>
+        <ul class="sobre-services-list">
+          <li>Fotografia de imóveis e arquitetura</li>
+          <li>Captação e edição de vídeo</li>
+          <li>Ambientações com Inteligência Artificial</li>
+          <li>Conteúdo para redes sociais</li>
+        </ul>
+      </div>
+      <ul class="ficha reveal">
+        <li><span class="ficha-label">Atendimento</span>Itapema, Balneário Camboriú, Porto Belo e região</li>
+        <li><span class="ficha-label">Segmento</span>Imobiliária | Arquitetura</li>
+        <li><span class="ficha-label">Experiência</span>15 anos</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section class="portfolio" id="portfolio">
+    <div class="portfolio-heading">
+      <span class="section-tag reveal">Portfólio</span>
+      <h2 class="section-title reveal">Projetos</h2>
+      <p class="portfolio-hint reveal">Passe o cursor sobre um projeto para ver as fotos · clique para abrir a galeria completa</p>
+    </div>
+    <ul class="portfolio-list" id="portfolioList"></ul>
+    <div class="portfolio-float" id="portfolioFloat" aria-hidden="true">
+      <img id="portfolioFloatImg" src="" alt="" loading="lazy" decoding="async">
+    </div>
+  </section>
+
+  <!-- CLIENTES -->
+  <section class="clientes" id="clientes">
+    <span class="section-tag reveal">Confiança</span>
+    <h2 class="section-title reveal">Clientes já atendidos</h2>
+    <div class="clients-grid" id="clientsGrid"></div>
+  </section>
+
+  <!-- CONTATO -->
+  <section class="contato" id="contato">
+    <div class="contato-watermark" aria-hidden="true">Contato</div>
+    <span class="section-tag light reveal">Contato</span>
+    <h2 class="contato-title reveal">Vamos contar a<br>história do seu imóvel?</h2>
+    <div class="contato-grid reveal">
+      <a class="contato-item" href="https://wa.me/5511974807165" target="_blank" rel="noopener">
+        <span class="contato-label">WhatsApp</span>
+        <span class="contato-value">(11) 97480-7165</span>
+      </a>
+      <a class="contato-item" href="mailto:priscilaandradefoto@gmail.com">
+        <span class="contato-label">E-mail</span>
+        <span class="contato-value">priscilaandradefoto@gmail.com</span>
+      </a>
+      <a class="contato-item" href="https://instagram.com/priscilaandradefoto" target="_blank" rel="noopener">
+        <span class="contato-label">Instagram</span>
+        <span class="contato-value">@priscilaandradefoto</span>
+      </a>
+      <span class="contato-item contato-item--static">
+        <span class="contato-label">Atendimento</span>
+        <span class="contato-value">Itapema, Balneário Camboriú e Porto Belo, SC</span>
+      </span>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <span>© <span id="year"></span> Priscila Andrade</span>
+  <span>Fotografia &amp; Vídeo para Imóveis e Arquitetura</span>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a class="whatsapp-float" href="https://wa.me/5511974807165" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 32 32" width="28" height="28" fill="currentColor"><path d="M16.02 3C9.4 3 4 8.37 4 15c0 2.37.66 4.58 1.8 6.47L4 29l7.73-1.75A11.9 11.9 0 0 0 16.02 27C22.63 27 28 21.63 28 15S22.63 3 16.02 3Zm0 21.8c-2.02 0-3.9-.58-5.5-1.58l-.4-.24-4.6 1.04 1-4.48-.26-.42A9.7 9.7 0 0 1 6.2 15c0-5.42 4.4-9.8 9.82-9.8 5.4 0 9.8 4.38 9.8 9.8 0 5.42-4.4 9.8-9.8 9.8Zm5.38-7.34c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.66.15-.2.3-.76.96-.94 1.16-.17.2-.35.22-.65.08-.3-.15-1.24-.46-2.37-1.46-.87-.78-1.46-1.74-1.63-2.04-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.66-1.6-.9-2.2-.24-.57-.48-.5-.66-.5h-.56c-.2 0-.52.07-.79.37s-1.04 1.02-1.04 2.48c0 1.46 1.07 2.87 1.22 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.71 2-1.4.24-.68.24-1.27.17-1.4-.07-.12-.27-.2-.57-.34Z"/></svg>
+</a>
+
+<!-- CASE OVERLAY -->
+<div class="case-overlay" id="caseOverlay" aria-hidden="true">
+  <div class="case-watermark" id="caseWatermark" aria-hidden="true"></div>
+  <button class="overlay-close" id="caseClose" aria-label="Fechar case">✕</button>
+  <div class="case-inner">
+    <div class="case-head">
+      <span class="case-index" id="caseIndex"></span>
+      <h2 class="case-title" id="caseTitle"></h2>
+      <div class="case-tags" id="caseTags"></div>
+    </div>
+    <div class="case-gallery" id="caseGallery"></div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="overlay-close" id="lightboxClose" aria-label="Fechar imagem">✕</button>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Foto anterior">‹</button>
+  <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Próxima foto">›</button>
+  <div class="lightbox-stage">
+    <img id="lightboxImg" src="" alt="" decoding="async">
+  </div>
+  <div class="lightbox-counter" id="lightboxCounter"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
