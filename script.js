@@ -3,13 +3,19 @@
 
   /* ============ DATA ============ */
   const PROJECTS = [
-    { id:'lucia-haddad', name:'Lúcia Haddad', tags:['Imóveis de Luxo','Still'], folder:'lucia-haddad', count:7 },
-    { id:'prateleira-dos-imoveis', name:'Prateleira dos Imóveis', tags:['Fotografia Imobiliária','Still','Vídeo'], folder:'prateleira-dos-imoveis', count:11, video:'1215877157', videoRatio:'240/426' },
-    { id:'z1', name:'Z1 Boutique de Imóveis', tags:['Boutique Imobiliária','Still'], folder:'z1', count:11 },
-    { id:'prime-to-place', name:'Prime To Place', tags:['Real Estate','Still'], folder:'prime-to-place', count:10 },
-    { id:'kora', name:'Kora', tags:['Arquitetura','Residencial'], folder:'kora', count:4 },
-    { id:'mavesol', name:'Mavesol', tags:['Imóveis','Residencial'], folder:'mavesol', count:4 },
+    { id:'ambientacao-ia', name:'Ambientação com IA', tags:['Ambientação com IA','Antes e Depois'], groups:[
+      { label:'Ambientação 01', before:'ambientacao-ia/ambientacao-ia-0125-antes.jpg', after:'ambientacao-ia/ambientacao-ia-0125-depois.jpg', video:'1216430609', videoRatio:'360/240' },
+      { label:'Ambientação 02', before:'ambientacao-ia/ambientacao-ia-0126-antes.jpg', after:'ambientacao-ia/ambientacao-ia-0126-depois.jpg', video:'1216430745', videoRatio:'360/240' },
+      { label:'Ambientação 03', before:'ambientacao-ia/ambientacao-ia-252-antes.jpg', after:'ambientacao-ia/ambientacao-ia-252-depois.jpg', video:'1216430974', videoRatio:'360/240' },
+      { label:'Ambientação 04', before:'ambientacao-ia/ambientacao-ia-0377-antes.jpg', after:'ambientacao-ia/ambientacao-ia-0377-depois.jpg', video:'1216431147', videoRatio:'360/240' },
+    ]},
     { id:'imovel-a', name:'Imóvel A', tags:['Residencial','Still','Vídeo'], folder:'imovel-a', count:3, video:'1215884469', videoRatio:'240/426' },
+    { id:'kora', name:'Kora', tags:['Arquitetura','Residencial'], folder:'kora', count:4 },
+    { id:'lucia-haddad', name:'Lúcia Haddad', tags:['Imóveis de Luxo','Still'], folder:'lucia-haddad', count:7 },
+    { id:'mavesol', name:'Mavesol', tags:['Imóveis','Residencial'], folder:'mavesol', count:4 },
+    { id:'prateleira-dos-imoveis', name:'Prateleira dos Imóveis', tags:['Fotografia Imobiliária','Still','Vídeo'], folder:'prateleira-dos-imoveis', count:11, video:'1215877157', videoRatio:'240/426' },
+    { id:'prime-to-place', name:'Prime To Place', tags:['Real Estate','Still'], folder:'prime-to-place', count:10 },
+    { id:'z1', name:'Z1 Boutique de Imóveis', tags:['Boutique Imobiliária','Still'], folder:'z1', count:11 },
   ];
 
   const CLIENTS = [
@@ -27,7 +33,9 @@
   ];
 
   const pad = n => String(n).padStart(2,'0');
-  const projectPhotos = p => Array.from({length:p.count}, (_,i) => `${p.folder}/${p.folder}-${pad(i+1)}.jpg`);
+  const projectPhotos = p => p.groups
+    ? p.groups.flatMap(g => [g.after, g.before])
+    : Array.from({length:p.count}, (_,i) => `${p.folder}/${p.folder}-${pad(i+1)}.jpg`);
 
   /* ============ HEADER SCROLL STATE ============ */
   const header = document.getElementById('siteHeader');
@@ -176,29 +184,56 @@
 
     const photos = projectPhotos(project);
 
-    caseVideo.innerHTML = project.video ? `
-      <div class="case-video-row">
-        <div class="case-video-side">
-          <img src="${photos[0] || ''}" alt="" loading="lazy" decoding="async">
+    if (project.groups) {
+      caseVideo.innerHTML = '';
+      caseGallery.innerHTML = project.groups.map((g, gi) => `
+        <div class="amb-group">
+          <span class="amb-group-label">${g.label}</span>
+          <div class="amb-group-row">
+            <figure class="amb-photo" data-index="${gi*2+1}">
+              <img src="${g.before}" alt="${g.label} — antes" loading="lazy" decoding="async">
+              <span class="amb-tag">Antes</span>
+            </figure>
+            <figure class="amb-photo" data-index="${gi*2}">
+              <img src="${g.after}" alt="${g.label} — depois" loading="lazy" decoding="async">
+              <span class="amb-tag">Depois</span>
+            </figure>
+            <div class="amb-video">
+              <iframe src="https://player.vimeo.com/video/${g.video}?background=1&title=0&byline=0&portrait=0&autoplay=1&muted=1&loop=1"
+                allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"
+                title="${g.label} — vídeo"></iframe>
+            </div>
+          </div>
         </div>
-        <div class="case-video-frame" style="--video-ratio:${project.videoRatio || '9/16'}">
-          <iframe src="https://player.vimeo.com/video/${project.video}?background=1&title=0&byline=0&portrait=0&autoplay=1&muted=1&loop=1"
-            allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"
-            title="${project.name} — vídeo"></iframe>
+      `).join('');
+      caseGallery.querySelectorAll('.amb-photo').forEach(fig => {
+        fig.addEventListener('click', () => openLightbox(project, Number(fig.dataset.index)));
+      });
+    } else {
+      caseVideo.innerHTML = project.video ? `
+        <div class="case-video-row">
+          <div class="case-video-side">
+            <img src="${photos[0] || ''}" alt="" loading="lazy" decoding="async">
+          </div>
+          <div class="case-video-frame" style="--video-ratio:${project.videoRatio || '9/16'}">
+            <iframe src="https://player.vimeo.com/video/${project.video}?background=1&title=0&byline=0&portrait=0&autoplay=1&muted=1&loop=1"
+              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"
+              title="${project.name} — vídeo"></iframe>
+          </div>
+          <div class="case-video-side">
+            <img src="${photos[1] || ''}" alt="" loading="lazy" decoding="async">
+          </div>
         </div>
-        <div class="case-video-side">
-          <img src="${photos[1] || ''}" alt="" loading="lazy" decoding="async">
-        </div>
-      </div>
-    ` : '';
-    caseGallery.innerHTML = photos.map((src, i) => `
-      <figure data-index="${i}">
-        <img src="${src}" alt="${project.name} — foto ${i+1}" loading="lazy" decoding="async">
-      </figure>
-    `).join('');
-    caseGallery.querySelectorAll('figure').forEach(fig => {
-      fig.addEventListener('click', () => openLightbox(project, Number(fig.dataset.index)));
-    });
+      ` : '';
+      caseGallery.innerHTML = photos.map((src, i) => `
+        <figure data-index="${i}">
+          <img src="${src}" alt="${project.name} — foto ${i+1}" loading="lazy" decoding="async">
+        </figure>
+      `).join('');
+      caseGallery.querySelectorAll('figure').forEach(fig => {
+        fig.addEventListener('click', () => openLightbox(project, Number(fig.dataset.index)));
+      });
+    }
 
     const others = PROJECTS.filter(p => p.id !== project.id);
     caseMore.innerHTML = `
@@ -263,7 +298,7 @@
     lightbox.setAttribute('aria-hidden','true');
   }
   function stepLightbox(dir) {
-    const total = lbProject.count;
+    const total = projectPhotos(lbProject).length;
     lbIndex = (lbIndex + dir + total) % total;
     renderLightbox();
   }
