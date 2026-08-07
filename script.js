@@ -170,7 +170,8 @@
   let currentProject = null;
   let lastFocused = null;
 
-  function openCase(id) {
+  function openCase(id, opts = {}) {
+    const { updateUrl = true } = opts;
     const project = PROJECTS.find(p => p.id === id);
     if (!project) return;
     currentProject = project;
@@ -259,16 +260,40 @@
     document.body.classList.add('no-scroll');
     caseOverlay.scrollTop = 0;
     caseClose.focus();
+
+    if (updateUrl && location.hash.slice(1) !== id) {
+      history.pushState({ caseId: id }, '', '#' + id);
+    }
   }
 
-  function closeCase() {
+  function closeCase(opts = {}) {
+    const { updateUrl = true } = opts;
     caseOverlay.classList.remove('open');
     caseOverlay.setAttribute('aria-hidden','true');
     document.body.classList.remove('no-scroll');
     if (lastFocused) lastFocused.focus();
+
+    if (updateUrl && location.hash) {
+      history.pushState({}, '', location.pathname + location.search);
+    }
   }
-  caseClose.addEventListener('click', closeCase);
+  caseClose.addEventListener('click', () => closeCase());
   caseOverlay.addEventListener('click', e => { if (e.target === caseOverlay) closeCase(); });
+
+  window.addEventListener('popstate', () => {
+    const id = location.hash.slice(1);
+    const project = PROJECTS.find(p => p.id === id);
+    if (project) {
+      openCase(id, { updateUrl:false });
+    } else if (caseOverlay.classList.contains('open')) {
+      closeCase({ updateUrl:false });
+    }
+  });
+
+  const initialId = location.hash.slice(1);
+  if (PROJECTS.find(p => p.id === initialId)) {
+    openCase(initialId, { updateUrl:false });
+  }
 
   /* ============ LIGHTBOX ============ */
   const lightbox = document.getElementById('lightbox');
