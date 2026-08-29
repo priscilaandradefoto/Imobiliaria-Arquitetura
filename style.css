@@ -541,6 +541,8 @@ body.no-scroll{ overflow:hidden; height:100%; }
   .case-gallery{ grid-template-columns:repeat(3,1fr); }
   .case-gallery > figure:nth-child(5n+1){ grid-column:span 2; aspect-ratio:8/3; }
   .case-gallery > figure:nth-child(5n+1) img{ aspect-ratio:8/3; }
+  .case-gallery > figure.fill-row{ grid-column:1/-1; aspect-ratio:8/3; }
+  .case-gallery > figure.fill-row img{ aspect-ratio:8/3; }
 
   .case-video-row{ flex-direction:row; align-items:stretch; height:min(70vh,620px); }
   .case-video-frame{ width:auto; height:100%; max-width:none; margin:0; flex-shrink:0; }
