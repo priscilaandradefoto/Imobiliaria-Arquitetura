@@ -10,7 +10,7 @@
       { label:'Ambientação 04', before:'ambientacao-ia/ambientacao-ia-0377-antes.jpg', after:'ambientacao-ia/ambientacao-ia-0377-depois.jpg', video:'1216431147', videoRatio:'360/240' },
     ]},
     { id:'imoveis-ferrari', name:'Imóveis Ferrari', tags:['Imóveis','Still','Vídeo'], folder:'imoveis-ferrari', count:15, video:'1219621575', videoRatio:'240/426' },
-    { id:'imovel-a', name:'Imóvel A', tags:['Residencial','Still','Vídeo'], folder:'imovel-a', count:3, video:'1215884469', videoRatio:'240/426' },
+    { id:'imovel-a', name:'Imóvel A', tags:['Residencial','Still','Vídeo'], folder:'imovel-a', count:16, video:'1215884469', videoRatio:'240/426' },
     { id:'kora', name:'Kora', tags:['Arquitetura','Residencial'], folder:'kora', count:4 },
     { id:'lucia-haddad', name:'Lúcia Haddad', tags:['Imóveis de Luxo','Still'], folder:'lucia-haddad', count:7 },
     { id:'mavesol', name:'Mavesol', tags:['Imóveis','Residencial'], folder:'mavesol', count:4 },
