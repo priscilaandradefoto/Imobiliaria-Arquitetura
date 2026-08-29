@@ -10,7 +10,7 @@
       { label:'Ambientação 04', before:'ambientacao-ia/ambientacao-ia-0377-antes.jpg', after:'ambientacao-ia/ambientacao-ia-0377-depois.jpg', video:'1216431147', videoRatio:'360/240' },
     ]},
     { id:'imoveis-ferrari', name:'Imóveis Ferrari', tags:['Imóveis','Still','Vídeo'], folder:'imoveis-ferrari', count:15, video:'1219621575', videoRatio:'240/426' },
-    { id:'imovel-a', name:'Imóvel A', tags:['Residencial','Still','Vídeo'], folder:'imovel-a', count:16, video:'1215884469', videoRatio:'240/426' },
+    { id:'imovel-a', name:'Imóvel A', tags:['Residencial','Still','Vídeo'], folder:'imovel-a', count:16, video:'1215884469', videoRatio:'240/426', fillLastRow:true },
     { id:'kora', name:'Kora', tags:['Arquitetura','Residencial'], folder:'kora', count:4 },
     { id:'lucia-haddad', name:'Lúcia Haddad', tags:['Imóveis de Luxo','Still'], folder:'lucia-haddad', count:7 },
     { id:'mavesol', name:'Mavesol', tags:['Imóveis','Residencial'], folder:'mavesol', count:4 },
@@ -35,19 +35,6 @@
   ];
 
   const pad = n => String(n).padStart(2,'0');
-  // Mirrors the desktop case-gallery grid (3 cols; every 5th photo spans 2 cols).
-  // Returns true only when the last photo would otherwise start a row alone
-  // with empty space beside it — i.e. expanding it to full width closes a
-  // real gap without stranding any photo before it.
-  const lastPhotoShouldFillRow = n => {
-    let current = 0;
-    for (let p = 1; p < n; p++) {
-      const w = (p - 1) % 5 === 0 ? 2 : 1;
-      current = (current + w > 3) ? w : current + w;
-      if (current === 3) current = 0;
-    }
-    return current === 0;
-  };
   const projectPhotos = p => p.groups
     ? p.groups.flatMap(g => [g.after, g.before])
     : Array.from({length:p.count}, (_,i) => `${p.folder}/${p.folder}-${pad(i+1)}.jpg`);
@@ -241,9 +228,8 @@
           </div>
         </div>
       ` : '';
-      const fillLast = lastPhotoShouldFillRow(photos.length);
       caseGallery.innerHTML = photos.map((src, i) => `
-        <figure data-index="${i}"${(fillLast && i === photos.length - 1) ? ' class="fill-row"' : ''}>
+        <figure data-index="${i}"${(project.fillLastRow && i === photos.length - 1) ? ' class="fill-row"' : ''}>
           <img src="${src}" alt="${project.name} — foto ${i+1}" loading="lazy" decoding="async">
         </figure>
       `).join('');
