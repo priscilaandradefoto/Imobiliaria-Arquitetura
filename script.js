@@ -11,7 +11,7 @@
     ]},
     { id:'imoveis-ferrari', name:'Imóveis Ferrari', tags:['Imóveis','Still','Vídeo'], folder:'imoveis-ferrari', count:15, video:'1219621575', videoRatio:'240/426' },
     { id:'imovel-a', name:'Imóvel A', tags:['Residencial','Still','Vídeo'], folder:'imovel-a', count:16, video:'1215884469', videoRatio:'240/426', fillLastRow:true },
-    { id:'kora', name:'Kora', tags:['Arquitetura','Residencial','Vídeo'], folder:'kora', count:13, video:'1222385358', videoRatio:'240/426' },
+    { id:'kora', name:'Kora', tags:['Arquitetura','Residencial','Vídeo'], folder:'kora', count:13, video:'1222385358', videoRatio:'240/426', fillLastRow:true },
     { id:'lucia-haddad', name:'Lúcia Haddad', tags:['Imóveis de Luxo','Still'], folder:'lucia-haddad', count:7 },
     { id:'mavesol', name:'Mavesol', tags:['Imóveis','Residencial'], folder:'mavesol', count:4 },
     { id:'prateleira-dos-imoveis', name:'Prateleira dos Imóveis', tags:['Fotografia Imobiliária','Still','Vídeo'], folder:'prateleira-dos-imoveis', count:11, video:'1215877157', videoRatio:'240/426' },
