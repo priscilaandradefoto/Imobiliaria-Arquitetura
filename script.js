@@ -14,7 +14,7 @@
     { id:'kora', name:'Kora', tags:['Arquitetura','Residencial','Vídeo'], folder:'kora', count:13, video:'1222385358', videoRatio:'240/426', fillLastRow:true },
     { id:'lucia-haddad', name:'Lúcia Haddad', tags:['Imóveis de Luxo','Still'], folder:'lucia-haddad', count:7 },
     { id:'mavesol', name:'Mavesol', tags:['Imóveis','Residencial'], folder:'mavesol', count:4 },
-    { id:'prateleira-dos-imoveis', name:'Prateleira dos Imóveis', tags:['Fotografia Imobiliária','Still','Vídeo'], folder:'prateleira-dos-imoveis', count:11, video:'1215877157', videoRatio:'240/426' },
+    { id:'prateleira-dos-imoveis', name:'Prateleira dos Imóveis', tags:['Fotografia Imobiliária','Still','Vídeo'], folder:'prateleira-dos-imoveis', count:22, video:'1215877157', videoRatio:'240/426', video2:'1222387528', video2Ratio:'240/426' },
     { id:'prime-to-place', name:'Prime To Place', tags:['Real Estate','Still'], folder:'prime-to-place', count:10 },
     { id:'z1', name:'Z1 Boutique de Imóveis', tags:['Boutique Imobiliária','Still'], folder:'z1', count:11 },
   ];
@@ -166,6 +166,7 @@
   const caseTags = document.getElementById('caseTags');
   const caseGallery = document.getElementById('caseGallery');
   const caseVideo = document.getElementById('caseVideo');
+  const caseVideo2 = document.getElementById('caseVideo2');
   const caseMore = document.getElementById('caseMore');
   const caseClose = document.getElementById('caseClose');
   const caseInner = document.querySelector('.case-inner');
@@ -255,6 +256,22 @@
         fig.addEventListener('click', () => openLightbox(project, Number(fig.dataset.index)));
       });
     }
+
+    caseVideo2.innerHTML = project.video2 ? `
+      <div class="case-video-row">
+        <div class="case-video-side">
+          <img src="${photos[photos.length-2] || ''}" alt="" loading="lazy" decoding="async">
+        </div>
+        <div class="case-video-frame" style="--video-ratio:${project.video2Ratio || '9/16'}">
+          <iframe src="https://player.vimeo.com/video/${project.video2}?background=1&title=0&byline=0&portrait=0&autoplay=1&muted=1&loop=1"
+            allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"
+            title="${project.name} — vídeo"></iframe>
+        </div>
+        <div class="case-video-side">
+          <img src="${photos[photos.length-1] || ''}" alt="" loading="lazy" decoding="async">
+        </div>
+      </div>
+    ` : '';
 
     const others = PROJECTS.filter(p => p.id !== project.id);
     caseMore.innerHTML = `
