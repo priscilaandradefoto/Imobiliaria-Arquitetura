@@ -369,13 +369,13 @@ a.contato-item:hover{ padding-left:.6rem; color:#e6c99a; }
 /* ============ CASE OVERLAY ============ */
 .case-overlay{
   position:fixed; inset:0; z-index:500; background:var(--bg);
-  opacity:0; visibility:hidden; transform:translateY(3%);
-  transition:opacity .55s var(--ease), transform .55s var(--ease), visibility 0s linear .55s;
+  opacity:0; visibility:hidden;
+  transition:opacity .55s var(--ease), visibility 0s linear .55s;
   overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch;
 }
 .case-overlay.open{
-  opacity:1; visibility:visible; transform:translateY(0);
-  transition:opacity .55s var(--ease), transform .55s var(--ease);
+  opacity:1; visibility:visible;
+  transition:opacity .55s var(--ease);
 }
 .case-watermark{
   position:absolute; top:6vw; left:50%; transform:translateX(-50%);

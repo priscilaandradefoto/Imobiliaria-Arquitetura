@@ -168,9 +168,27 @@
   const caseVideo = document.getElementById('caseVideo');
   const caseMore = document.getElementById('caseMore');
   const caseClose = document.getElementById('caseClose');
+  const caseInner = document.querySelector('.case-inner');
 
   let currentProject = null;
   let lastFocused = null;
+
+  // Scales the translucent project-name watermark so its rendered width
+  // matches the case content width (the same width as the photo grid).
+  // Capped so very short names (e.g. "Kora") don't blow up absurdly large.
+  function fitWatermark(text) {
+    caseWatermark.textContent = text;
+    caseWatermark.style.fontSize = '200px';
+    const naturalWidth = caseWatermark.getBoundingClientRect().width;
+    if (!naturalWidth) return;
+    const cs = getComputedStyle(caseInner);
+    const targetWidth = caseInner.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    const fontSize = Math.min(208, Math.max(64, 200 * (targetWidth / naturalWidth)));
+    caseWatermark.style.fontSize = fontSize + 'px';
+  }
+  window.addEventListener('resize', () => {
+    if (currentProject && caseOverlay.classList.contains('open')) fitWatermark(currentProject.name);
+  });
 
   function openCase(id, opts = {}) {
     const { updateUrl = true } = opts;
@@ -182,7 +200,7 @@
     const idx = PROJECTS.indexOf(project) + 1;
     caseIndex.textContent = `Projeto ${pad(idx)} / ${pad(PROJECTS.length)}`;
     caseTitle.textContent = project.name;
-    caseWatermark.textContent = project.name;
+    fitWatermark(project.name);
     caseTags.innerHTML = project.tags.map(t => `<span>${t}</span>`).join('');
 
     const photos = projectPhotos(project);
