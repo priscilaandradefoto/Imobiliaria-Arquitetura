@@ -397,6 +397,7 @@ a.contato-item:hover{ padding-left:.6rem; color:#e6c99a; }
 .case-video-row{
   display:flex; flex-direction:column; gap:.6rem; margin-bottom:2.5rem;
 }
+.case-gallery > .case-video-row{ grid-column:1/-1; margin:.6rem 0; }
 .case-video-frame{
   position:relative; width:100%; max-width:380px; margin:0 auto;
   aspect-ratio:var(--video-ratio,9/16); overflow:hidden; border-radius:2px; background:var(--bg-raised);
@@ -503,12 +504,14 @@ a.contato-item:hover{ padding-left:.6rem; color:#e6c99a; }
 }
 
 .overlay-close{
-  position:fixed; top:1.25rem; right:1.25rem; z-index:610;
+  position:fixed; top:1.25rem; right:max(1.25rem, calc((100vw - 1280px)/2 + 1.25rem)); z-index:610;
   width:44px; height:44px; display:flex; align-items:center; justify-content:center;
-  font-size:1.1rem; color:var(--ink); background:rgba(243,238,228,.9); border-radius:50%;
+  font-size:1.1rem; color:var(--ink); background:rgba(243,238,228,.9);
+  border:1px solid rgba(27,26,24,.18); border-radius:50%;
+  box-shadow:0 4px 14px -4px rgba(0,0,0,.18);
   transition:transform .3s var(--ease);
 }
-.lightbox .overlay-close{ color:#fff; background:rgba(255,255,255,.12); }
+.lightbox .overlay-close{ color:#fff; background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.3); }
 .overlay-close:hover{ transform:rotate(90deg); }
 
 body.no-scroll{ overflow:hidden; height:100%; }
