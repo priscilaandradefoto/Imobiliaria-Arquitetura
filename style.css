@@ -452,7 +452,7 @@ a.contato-item:hover{ padding-left:.6rem; color:#e6c99a; }
   transition:transform .6s var(--ease); will-change:transform;
 }
 .case-gallery figure:hover img{ transform:scale(1.045); }
-.case-gallery figure:nth-child(3n+1){ grid-column:span 1; }
+.case-gallery figure:nth-of-type(3n+1){ grid-column:span 1; }
 
 .case-more{ margin-top:4rem; padding-top:2.5rem; border-top:1px solid var(--gold-line); }
 .case-more-label{
@@ -544,8 +544,8 @@ body.no-scroll{ overflow:hidden; height:100%; }
   .portfolio-row-inner:hover .portfolio-arrow{ opacity:1; transform:translateX(0) rotate(-45deg); }
 
   .case-gallery{ grid-template-columns:repeat(3,1fr); }
-  .case-gallery > figure:nth-child(5n+1){ grid-column:span 2; aspect-ratio:8/3; }
-  .case-gallery > figure:nth-child(5n+1) img{ aspect-ratio:8/3; }
+  .case-gallery > figure:nth-of-type(5n+1){ grid-column:span 2; aspect-ratio:8/3; }
+  .case-gallery > figure:nth-of-type(5n+1) img{ aspect-ratio:8/3; }
   .case-gallery > figure.fill-row{ grid-column:1/-1; aspect-ratio:8/3; }
   .case-gallery > figure.fill-row img{ aspect-ratio:8/3; }
 
