@@ -107,19 +107,9 @@
     sync();
   }
 
-  /* ============ RODAPÉ: revelação + nome gigante ajustado à largura ============ */
+  /* ============ RODAPÉ: revelação por trás da página ============ */
   const footer = document.getElementById('contato');
-  const footerWord = document.getElementById('footerWord');
   if (footer) {
-    const fitWord = () => {
-      if (!footerWord) return;
-      const avail = footerWord.parentElement.clientWidth;
-      for (let i = 0; i < 2; i++) {  // 2 passes: o Fraunces muda de proporção com o tamanho (eixo opsz)
-        const cur = parseFloat(getComputedStyle(footerWord).fontSize);
-        const w = footerWord.getBoundingClientRect().width;
-        if (w) footerWord.style.fontSize = (cur * avail / w).toFixed(2) + 'px';
-      }
-    };
     let fTicking = false;
     const reveal = () => {
       fTicking = false;
@@ -131,9 +121,8 @@
     };
     const onFooterScroll = () => { if (!fTicking) { fTicking = true; requestAnimationFrame(reveal); } };
     window.addEventListener('scroll', onFooterScroll, { passive:true });
-    window.addEventListener('resize', () => { fitWord(); onFooterScroll(); });
-    (document.fonts ? document.fonts.ready : Promise.resolve()).then(fitWord);
-    fitWord(); reveal();
+    window.addEventListener('resize', onFooterScroll);
+    reveal();
 
     // o rodapé é fixo, então o link "Contato" rola até o fim da página
     const toFooter = e => {
