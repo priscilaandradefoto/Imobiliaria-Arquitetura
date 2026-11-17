@@ -213,52 +213,26 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
   padding:clamp(4rem,10vw,7rem) clamp(1.25rem,4vw,3rem) clamp(5rem,10vw,7rem);
   max-width:1280px; margin:0 auto;
 }
-.portfolio-heading{ margin-bottom:2rem; }
-.portfolio-hint{ color:var(--ink-faint); font-size:.85rem; }
-.portfolio-list{ border-top:1px solid var(--gold-line); }
-
-.portfolio-row{
-  border-bottom:1px solid var(--gold-line);
-  cursor:pointer;
+.portfolio-heading{ margin-bottom:clamp(2rem,5vw,3.5rem); }
+.pf-grid{ display:flex; flex-direction:column; gap:3rem; }
+.pf-col{ display:contents; }
+.pf-card{ order:var(--i); cursor:pointer; }
+.pf-img{ overflow:hidden; background:var(--bg-raised); width:100%; }
+.pf-img img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform .9s var(--ease);
 }
-.portfolio-row-inner{
-  display:flex; flex-wrap:wrap; align-items:center; gap:.3rem clamp(1rem,3vw,2rem);
-  padding:1.5rem 0; transition:padding .4s var(--ease);
+.pf-meta{
+  display:grid; grid-template-columns:auto 1fr; gap:.2rem 1rem; align-items:baseline; padding-top:1rem;
 }
-.portfolio-index{
-  order:1; flex-basis:100%;
-  font-size:.78rem; color:var(--ink-faint); font-variant-numeric:tabular-nums; width:1.6rem; flex-shrink:0;
+.pf-idx{ font-size:.75rem; color:var(--ink-faint); font-variant-numeric:tabular-nums; }
+.pf-name{
+  font-family:var(--serif); font-weight:500; font-size:clamp(1.35rem,3vw,1.75rem);
+  letter-spacing:-.005em; line-height:1.2; transition:color .4s var(--ease);
 }
-.portfolio-thumb-mobile{
-  order:4; width:100%; flex-basis:100%; aspect-ratio:16/10;
-  border-radius:2px; overflow:hidden; background:var(--bg-raised);
+.pf-tags{
+  grid-column:2; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:500;
 }
-.portfolio-thumb-mobile img{ width:100%; height:100%; object-fit:cover; }
-.portfolio-name{
-  order:2;
-  font-family:var(--serif); font-weight:500; font-size:clamp(1.5rem,4.4vw,2.6rem);
-  letter-spacing:-.01em; flex:1; transition:color .4s var(--ease), transform .4s var(--ease);
-}
-.portfolio-tags{ order:3; display:none; gap:.5rem; flex-shrink:0; }
-.portfolio-tags span{
-  font-size:.7rem; letter-spacing:.06em; text-transform:uppercase; color:var(--gold);
-  border:1px solid var(--gold-line); border-radius:100px; padding:.35rem .8rem; white-space:nowrap;
-}
-.portfolio-arrow{
-  order:5;
-  font-family:var(--serif); font-size:1.6rem; color:var(--ink-faint); flex-shrink:0;
-  transform:translateX(-6px) rotate(-45deg); opacity:0; transition:all .4s var(--ease);
-}
-
-.portfolio-float{
-  position:fixed; top:0; left:0; width:min(30vw,340px); aspect-ratio:4/5;
-  pointer-events:none; z-index:60; border-radius:2px; overflow:hidden;
-  opacity:0; transform:translate(-50%,-50%) scale(.92);
-  transition:opacity .4s var(--ease), transform .6s var(--ease);
-  box-shadow:0 30px 60px -20px rgba(0,0,0,.35);
-}
-.portfolio-float.active{ opacity:1; transform:translate(-50%,-50%) scale(1); }
-.portfolio-float img{ width:100%; height:100%; object-fit:cover; }
 
 /* ============ CLIENTES ============ */
 .clientes{
@@ -535,13 +509,13 @@ body.no-scroll{ overflow:hidden; height:100%; }
   .nav-toggle{ display:none; }
   .mobile-nav{ display:none; }
 
-  .portfolio-tags{ display:flex; }
-  .portfolio-thumb-mobile{ display:none; }
-  .portfolio-index{ flex-basis:auto; }
   .hero-eyebrow{ display:block; }
-  .portfolio-row-inner:hover{ padding-left:1.25rem; }
-  .portfolio-row-inner:hover .portfolio-name{ color:var(--gold); transform:translateX(4px); }
-  .portfolio-row-inner:hover .portfolio-arrow{ opacity:1; transform:translateX(0) rotate(-45deg); }
+  .pf-grid{ display:grid; grid-template-columns:1fr 1fr; gap:0 clamp(2rem,4vw,3.5rem); align-items:start; }
+  .pf-col{ display:flex; flex-direction:column; gap:clamp(3rem,5vw,4.5rem); }
+  .pf-col:nth-child(2){ margin-top:clamp(4rem,9vw,8rem); }
+  .pf-card{ order:0; }
+  .pf-card:hover .pf-img img{ transform:scale(1.04); }
+  .pf-card:hover .pf-name{ color:var(--gold); }
 
   .case-gallery{ grid-template-columns:repeat(3,1fr); }
   .case-gallery > figure:nth-of-type(5n+1){ grid-column:span 2; aspect-ratio:8/3; }
@@ -557,10 +531,6 @@ body.no-scroll{ overflow:hidden; height:100%; }
   .case-video-side img{ width:100%; height:100%; object-fit:cover; }
 }
 
-
-@media (pointer:coarse){
-  .portfolio-float{ display:none; }
-}
 
 @media (prefers-reduced-motion:reduce){
   html{ scroll-behavior:auto; }

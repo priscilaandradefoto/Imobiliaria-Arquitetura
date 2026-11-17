@@ -69,70 +69,31 @@
   }, { threshold:.12, rootMargin:'0px 0px -60px 0px' });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  /* ============ PORTFOLIO LIST ============ */
-  const listEl = document.getElementById('portfolioList');
+  /* ============ PORTFOLIO GRID ============ */
+  // ritmo de proporções das capas (retrato / paisagem / quadrado) para a grade ter variação, como numa galeria
+  const COVER_RHYTHM = ['4/5','3/2','3/2','4/5','1/1','4/5','3/2','1/1','3/2'];
+  const gridEl = document.getElementById('portfolioList');
+  const gridCols = [document.createElement('div'), document.createElement('div')];
+  gridCols.forEach(c => { c.className = 'pf-col'; gridEl.appendChild(c); });
   PROJECTS.forEach((p, i) => {
     const photos = projectPhotos(p);
-    const li = document.createElement('li');
-    li.className = 'portfolio-row';
-    li.dataset.id = p.id;
-    li.innerHTML = `
-      <div class="portfolio-row-inner">
-        <span class="portfolio-index">${pad(i+1)}</span>
-        <div class="portfolio-thumb-mobile">
-          <img src="${photos[0]}" alt="" loading="lazy" decoding="async">
-        </div>
-        <h3 class="portfolio-name">${p.name}</h3>
-        <div class="portfolio-tags">${p.tags.map(t=>`<span>${t}</span>`).join('')}</div>
-        <span class="portfolio-arrow">↗</span>
+    const card = document.createElement('article');
+    card.className = 'pf-card';
+    card.dataset.id = p.id;
+    card.style.setProperty('--i', i);
+    card.innerHTML = `
+      <div class="pf-img" style="aspect-ratio:${COVER_RHYTHM[i % COVER_RHYTHM.length]}">
+        <img src="${photos[0]}" alt="${p.name}" loading="lazy" decoding="async">
+      </div>
+      <div class="pf-meta">
+        <span class="pf-idx">${pad(i+1)}</span>
+        <h3 class="pf-name">${p.name}</h3>
+        <span class="pf-tags">${p.tags.join(' · ')}</span>
       </div>
     `;
-    li.addEventListener('click', () => openCase(p.id));
-    listEl.appendChild(li);
+    card.addEventListener('click', () => openCase(p.id));
+    gridCols[i % 2].appendChild(card);
   });
-
-  /* ============ FLOATING PHOTO (desktop hover-follow) ============ */
-  const canHoverFine = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
-  if (canHoverFine) {
-    const floatEl = document.getElementById('portfolioFloat');
-    const floatImg = document.getElementById('portfolioFloatImg');
-    const portfolioSection = document.getElementById('portfolio');
-    let targetX = 0, targetY = 0, curX = 0, curY = 0, raf = null, active = false;
-
-    const loop = () => {
-      curX += (targetX - curX) * 0.16;
-      curY += (targetY - curY) * 0.16;
-      floatEl.style.left = curX + 'px';
-      floatEl.style.top = curY + 'px';
-      if (active || Math.abs(targetX-curX) > .5 || Math.abs(targetY-curY) > .5) {
-        raf = requestAnimationFrame(loop);
-      } else {
-        raf = null;
-      }
-    };
-    const ensureLoop = () => { if (!raf) raf = requestAnimationFrame(loop); };
-
-    portfolioSection.addEventListener('mousemove', e => {
-      targetX = e.clientX; targetY = e.clientY;
-      ensureLoop();
-    });
-
-    listEl.querySelectorAll('.portfolio-row').forEach(row => {
-      const project = PROJECTS.find(p => p.id === row.dataset.id);
-      const cover = projectPhotos(project)[0];
-      row.addEventListener('mouseenter', () => {
-        floatImg.src = cover;
-        floatEl.classList.add('active');
-        active = true;
-        ensureLoop();
-      });
-      row.addEventListener('mouseleave', () => {
-        floatEl.classList.remove('active');
-        active = false;
-        ensureLoop();
-      });
-    });
-  }
 
   /* ============ CLIENTS GRID ============ */
   const clientsGrid = document.getElementById('clientsGrid');
