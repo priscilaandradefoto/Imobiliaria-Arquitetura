@@ -57,53 +57,55 @@
 <main id="top">
 
   <!-- HERO -->
-  <section class="hero" id="hero">
-    <div class="hero-media">
-      <img src="kora/kora-01.jpg" alt="" class="hero-img" fetchpriority="high">
-      <div class="hero-scrim"></div>
+  <div class="stage" id="stage">
+    <section class="hero" id="hero">
+      <div class="hero-media">
+        <img src="kora/kora-01.jpg" alt="" class="hero-img" fetchpriority="high">
+        <div class="hero-scrim"></div>
+      </div>
+      <div class="hero-content">
+        <p class="hero-eyebrow reveal">Fotografia &amp; Vídeo · Imóveis e Arquitetura</p>
+        <h1 class="hero-headline reveal">Contando a história dos espaços através da fotografia e do vídeo.</h1>
+        <a href="#portfolio" class="hero-scroll reveal">
+          <span>Ver portfólio</span>
+          <svg width="14" height="22" viewBox="0 0 14 22" fill="none"><path d="M7 1V21M7 21L1 15M7 21L13 15" stroke="currentColor" stroke-width="1.2"/></svg>
+        </a>
+      </div>
+    </section>
+  <div class="sobre-band" id="sobreBand">
+    <div class="sobre-band-inner">
+      <span class="section-tag light reveal">Sobre</span>
+      <h2 class="section-title sobre-title reveal">Priscila Andrade</h2>
+      <p class="sobre-lead reveal">Fotógrafa e videomaker de imóveis e arquitetura. Paulistana, hoje em Itapema,&nbsp;SC.</p>
     </div>
-    <div class="hero-watermark" aria-hidden="true">Priscila</div>
-    <div class="hero-content">
-      <p class="hero-eyebrow reveal">Fotografia &amp; Vídeo · Imóveis e Arquitetura</p>
-      <h1 class="hero-headline reveal">Contando a história dos espaços através da fotografia e do vídeo.</h1>
-      <a href="#portfolio" class="hero-scroll reveal">
-        <span>Ver portfólio</span>
-        <svg width="14" height="22" viewBox="0 0 14 22" fill="none"><path d="M7 1V21M7 21L1 15M7 21L13 15" stroke="currentColor" stroke-width="1.2"/></svg>
-      </a>
-    </div>
-  </section>
+  </div>
+    <div class="stage-spacer" aria-hidden="true"></div>
+    <span class="stage-anchor" id="sobre"></span>
+    <section class="sobre">
+      <div class="sobre-inner">
+        <ul class="ficha reveal">
+          <li><span class="ficha-num">15 anos</span><span class="ficha-label">de experiência</span></li>
+          <li><span class="ficha-num">3 cidades</span><span class="ficha-label">Itapema · BC · Porto Belo</span></li>
+          <li><span class="ficha-num">Foto + vídeo</span><span class="ficha-label">e ambientação com IA</span></li>
+          <li><span class="ficha-num">Imobiliárias</span><span class="ficha-label">incorporadoras e corretores</span></li>
+        </ul>
+        <div class="sobre-body">
+          <div class="sobre-copy">
+            <p class="sobre-text reveal">Atendo <strong>imobiliárias, incorporadoras e corretores</strong> em Itapema, Balneário Camboriú, Porto Belo e região.</p>
+            <p class="sobre-text reveal">Com 15 anos de experiência, já assinei a produção fotográfica e audiovisual de nomes como Prateleira dos Imóveis, Dicastanha Fotografia Imobiliária, Casas Bacanas, Legacy Brokers e Abyara Prontos — unindo técnica, luz e composição para valorizar cada imóvel e ajudar o time comercial a vender mais&nbsp;rápido.</p>
+          </div>
+          <ul class="sobre-chips reveal">
+            <li>Fotografia de imóveis e arquitetura</li>
+            <li>Captação e edição de vídeo</li>
+            <li>Ambientações com IA</li>
+            <li>Conteúdo para redes sociais</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
 
   <!-- SOBRE -->
-  <section class="sobre" id="sobre">
-    <div class="sobre-band reveal">
-      <div class="sobre-band-inner">
-        <span class="section-tag light reveal">Sobre</span>
-        <h2 class="section-title sobre-title reveal">Priscila Andrade</h2>
-        <p class="sobre-lead reveal">Fotógrafa e videomaker de imóveis e arquitetura. Paulistana, hoje em Itapema,&nbsp;SC.</p>
-      </div>
-    </div>
-    <div class="sobre-inner">
-      <ul class="ficha reveal">
-        <li><span class="ficha-num">15 anos</span><span class="ficha-label">de experiência</span></li>
-        <li><span class="ficha-num">3 cidades</span><span class="ficha-label">Itapema · BC · Porto Belo</span></li>
-        <li><span class="ficha-num">Foto + vídeo</span><span class="ficha-label">e ambientação com IA</span></li>
-        <li><span class="ficha-num">Imobiliárias</span><span class="ficha-label">incorporadoras e corretores</span></li>
-      </ul>
-      <div class="sobre-body">
-        <div class="sobre-copy">
-          <p class="sobre-text reveal">Atendo <strong>imobiliárias, incorporadoras e corretores</strong> em Itapema, Balneário Camboriú, Porto Belo e região.</p>
-          <p class="sobre-text reveal">Com 15 anos de experiência, já assinei a produção fotográfica e audiovisual de nomes como Prateleira dos Imóveis, Dicastanha Fotografia Imobiliária, Casas Bacanas, Legacy Brokers e Abyara Prontos — unindo técnica, luz e composição para valorizar cada imóvel e ajudar o time comercial a vender mais&nbsp;rápido.</p>
-        </div>
-        <ul class="sobre-chips reveal">
-          <li>Fotografia de imóveis e arquitetura</li>
-          <li>Captação e edição de vídeo</li>
-          <li>Ambientações com IA</li>
-          <li>Conteúdo para redes sociais</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
   <!-- PORTFOLIO -->
   <section class="portfolio" id="portfolio">
     <div class="portfolio-heading">
@@ -121,34 +123,46 @@
   </section>
 
   <!-- CONTATO -->
-  <section class="contato" id="contato">
-    <span class="section-tag light reveal">Contato</span>
-    <h2 class="contato-title reveal">Vamos contar a<br>história do seu imóvel?</h2>
-    <div class="contato-grid reveal">
-      <a class="contato-item" href="https://wa.me/5511974807165" target="_blank" rel="noopener">
-        <span class="contato-label">WhatsApp</span>
-        <span class="contato-value">(11) 97480-7165</span>
-      </a>
-      <a class="contato-item" href="mailto:priscilaandradefoto@gmail.com">
-        <span class="contato-label">E-mail</span>
-        <span class="contato-value">priscilaandradefoto@gmail.com</span>
-      </a>
-      <a class="contato-item" href="https://instagram.com/priscilaandradefoto" target="_blank" rel="noopener">
-        <span class="contato-label">Instagram</span>
-        <span class="contato-value">@priscilaandradefoto</span>
-      </a>
-      <span class="contato-item contato-item--static">
-        <span class="contato-label">Atendimento</span>
-        <span class="contato-value">Itapema, Balneário Camboriú e Porto Belo, SC</span>
-      </span>
-    </div>
-  </section>
-
 </main>
 
-<footer class="site-footer">
-  <span>© <span id="year"></span> Priscila Andrade</span>
-  <span>Fotografia &amp; Vídeo para Imóveis e Arquitetura</span>
+<!-- RODAPÉ: fica parado atrás da página e é revelado no fim do scroll -->
+<footer class="site-footer" id="contato">
+  <div class="footer-bg" aria-hidden="true"></div>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-lead">
+        <h2 class="footer-statement">Vamos contar a história do <em>seu imóvel?</em></h2>
+        <a class="footer-btn" href="https://wa.me/5511974807165" target="_blank" rel="noopener">
+          <span class="footer-btn-label">Falar no WhatsApp</span>
+          <span class="footer-btn-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <span class="footer-label">Navegue</span>
+          <a href="#sobre">Sobre</a>
+          <a href="#portfolio">Portfólio</a>
+          <a href="#clientes">Clientes</a>
+        </div>
+        <div class="footer-col">
+          <span class="footer-label">Conecte</span>
+          <div class="footer-social">
+            <a href="https://instagram.com/priscilaandradefoto" target="_blank" rel="noopener" aria-label="Instagram @priscilaandradefoto" title="Instagram"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+            <a href="https://wa.me/5511974807165" target="_blank" rel="noopener" aria-label="WhatsApp (11) 97480-7165" title="WhatsApp"><svg viewBox="0 0 32 32" width="21" height="21" fill="currentColor" aria-hidden="true"><path d="M16.02 3C9.4 3 4 8.37 4 15c0 2.37.66 4.58 1.8 6.47L4 29l7.73-1.75A11.9 11.9 0 0 0 16.02 27C22.63 27 28 21.63 28 15S22.63 3 16.02 3Zm0 21.8c-2.02 0-3.9-.58-5.5-1.58l-.4-.24-4.6 1.04 1-4.48-.26-.42A9.7 9.7 0 0 1 6.2 15c0-5.42 4.4-9.8 9.82-9.8 5.4 0 9.8 4.38 9.8 9.8 0 5.42-4.4 9.8-9.8 9.8Zm5.38-7.34c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.66.15-.2.3-.76.96-.94 1.16-.17.2-.35.22-.65.08-.3-.15-1.24-.46-2.37-1.46-.87-.78-1.46-1.74-1.63-2.04-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.66-1.6-.9-2.2-.24-.57-.48-.5-.66-.5h-.56c-.2 0-.52.07-.79.37s-1.04 1.02-1.04 2.48c0 1.46 1.07 2.87 1.22 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.71 2-1.4.24-.68.24-1.27.17-1.4-.07-.12-.27-.2-.57-.34Z"/></svg></a>
+          </div>
+          <a href="mailto:priscilaandradefoto@gmail.com">priscilaandradefoto@gmail.com</a>
+        </div>
+        <a href="#top" class="footer-up" aria-label="Voltar ao topo">&uarr;</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-word" id="footerWord"><span>Priscila</span> <span>Andrade</span></div>
+      <div class="footer-base">
+        <span>© <span id="year"></span> Priscila Andrade</span>
+        <span>Itapema · Balneário Camboriú · Porto Belo</span>
+      </div>
+    </div>
+  </div>
 </footer>
 
 <!-- INSTAGRAM FLOAT -->

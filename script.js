@@ -63,6 +63,87 @@
   });
   mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileNav));
 
+  /* ============ HERO -> SOBRE: um scroll troca a foto inteira (a página não se move) ============ */
+  const stage = document.getElementById('stage');
+  const sobreBand = document.getElementById('sobreBand');
+  if (stage && sobreBand) {
+    const top = () => stage.offsetTop;
+    const end = () => stage.offsetTop + window.innerHeight;   // posição em que o Sobre está completo
+    let busy = false;
+    const setShown = on => document.body.classList.toggle('sobre-shown', on);
+    const go = (toSobre) => {
+      busy = true;
+      setShown(toSobre);
+      window.scrollTo({ top: toSobre ? end() : top(), behavior:'smooth' });
+      setTimeout(() => { busy = false; }, 1000);
+    };
+    // dentro do "palco" (entre o hero e o Sobre completo) qualquer gesto vira a troca inteira
+    const inStage = () => window.scrollY >= top() - 2 && window.scrollY < end() - 2;
+    const atSobre = () => Math.abs(window.scrollY - end()) <= 2;
+    const handle = (dir, e) => {
+      if (busy) { if (inStage() || atSobre()) e.preventDefault(); return; }
+      if (dir > 0 && inStage() && !document.body.classList.contains('sobre-shown')) { e.preventDefault(); go(true); }
+      else if (dir < 0 && (inStage() || atSobre())) { e.preventDefault(); go(false); }
+    };
+    window.addEventListener('wheel', e => {
+      if (document.body.classList.contains('no-scroll') || Math.abs(e.deltaY) < 2) return;
+      handle(Math.sign(e.deltaY), e);
+    }, { passive:false });
+    let touchY = null;
+    window.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive:true });
+    window.addEventListener('touchmove', e => {
+      if (touchY === null || document.body.classList.contains('no-scroll')) return;
+      const d = touchY - e.touches[0].clientY;
+      if (Math.abs(d) > 12) { handle(Math.sign(d), e); touchY = null; }
+    }, { passive:false });
+    window.addEventListener('keydown', e => {
+      if (document.body.classList.contains('no-scroll')) return;
+      const down = ['ArrowDown','PageDown',' '].includes(e.key), up = ['ArrowUp','PageUp'].includes(e.key);
+      if (down || up) handle(down ? 1 : -1, e);
+    });
+    // barra de rolagem, link do menu, recarregar no meio etc.: mantém o estado coerente com a posição
+    const sync = () => { if (!busy) setShown(window.scrollY >= top() + window.innerHeight * .5); };
+    window.addEventListener('scroll', sync, { passive:true });
+    sync();
+  }
+
+  /* ============ RODAPÉ: revelação + nome gigante ajustado à largura ============ */
+  const footer = document.getElementById('contato');
+  const footerWord = document.getElementById('footerWord');
+  if (footer) {
+    const fitWord = () => {
+      if (!footerWord) return;
+      const avail = footerWord.parentElement.clientWidth;
+      for (let i = 0; i < 2; i++) {  // 2 passes: o Fraunces muda de proporção com o tamanho (eixo opsz)
+        const cur = parseFloat(getComputedStyle(footerWord).fontSize);
+        const w = footerWord.getBoundingClientRect().width;
+        if (w) footerWord.style.fontSize = (cur * avail / w).toFixed(2) + 'px';
+      }
+    };
+    let fTicking = false;
+    const reveal = () => {
+      fTicking = false;
+      const docH = document.documentElement.scrollHeight;
+      const fh = footer.offsetHeight;
+      const p = Math.min(1, Math.max(0, (window.scrollY + window.innerHeight - (docH - fh)) / fh));
+      footer.style.setProperty('--p', p.toFixed(3));
+      document.body.classList.toggle('at-footer', p > .25);
+    };
+    const onFooterScroll = () => { if (!fTicking) { fTicking = true; requestAnimationFrame(reveal); } };
+    window.addEventListener('scroll', onFooterScroll, { passive:true });
+    window.addEventListener('resize', () => { fitWord(); onFooterScroll(); });
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(fitWord);
+    fitWord(); reveal();
+
+    // o rodapé é fixo, então o link "Contato" rola até o fim da página
+    const toFooter = e => {
+      e.preventDefault();
+      window.scrollTo({ top: document.documentElement.scrollHeight, behavior:'smooth' });
+    };
+    document.querySelectorAll('a[href="#contato"]').forEach(a => a.addEventListener('click', toFooter));
+    if (location.hash === '#contato') setTimeout(() => window.scrollTo(0, document.documentElement.scrollHeight), 300);
+  }
+
   /* ============ REVEAL ON SCROLL ============ */
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); } });
