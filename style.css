@@ -69,9 +69,10 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
   height:var(--header-h);
   display:flex; align-items:center; justify-content:space-between;
   padding:0 clamp(1.25rem,4vw,3rem);
-  transition:background .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
+  transition:background .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease), transform .45s var(--ease);
   border-bottom:1px solid transparent;
 }
+.site-header.is-hidden{ transform:translateY(-100%); }
 .site-header.scrolled, body.nav-open .site-header{
   background:rgba(243,238,228,.86); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
   border-color:rgba(27,26,24,.08);

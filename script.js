@@ -41,7 +41,16 @@
 
   /* ============ HEADER SCROLL STATE ============ */
   const header = document.getElementById('siteHeader');
-  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 40);
+  // menu some ao rolar pra baixo e volta ao rolar pra cima
+  let lastY = window.scrollY;
+  const onScroll = () => {
+    const y = window.scrollY;
+    header.classList.toggle('scrolled', y > 40);
+    if (document.body.classList.contains('nav-open') || y < 80) header.classList.remove('is-hidden');
+    else if (y > lastY + 6) header.classList.add('is-hidden');
+    else if (y < lastY - 6) header.classList.remove('is-hidden');
+    if (Math.abs(y - lastY) > 6) lastY = y;
+  };
   onScroll();
   window.addEventListener('scroll', onScroll, { passive:true });
 
