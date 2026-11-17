@@ -151,8 +151,8 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
   font-size:.78rem; letter-spacing:.18em; text-transform:uppercase; color:#e6c99a; margin-bottom:1.1rem;
 }
 .hero-headline{
-  font-family:var(--serif); font-weight:500; font-size:clamp(2rem,5.2vw,3.4rem);
-  line-height:1.08; letter-spacing:-.01em; max-width:16ch;
+  font-family:var(--serif); font-weight:600; font-size:clamp(2rem,5.2vw,3.4rem);
+  line-height:1.08; letter-spacing:-.015em; max-width:16ch;
 }
 .hero-scroll{
   display:inline-flex; align-items:center; gap:.6rem; margin-top:2.5rem;
