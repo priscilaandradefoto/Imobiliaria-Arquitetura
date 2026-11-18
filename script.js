@@ -254,6 +254,61 @@
   window.addEventListener('resize', onCardsScroll);
   updateCards();
 
+  /* ============ TESTE ?encaixe (celular): um deslize sobe o próximo projeto e encaixa na tela ============ */
+  if (new URLSearchParams(location.search).has('encaixe') && phoneView.matches && orderedCards.length) {
+    document.body.classList.add('snap-on');
+    updateCards();
+    const stops = () => {
+      const h = orderedCards[0].offsetHeight, top = gridEl.getBoundingClientRect().top + window.scrollY;
+      return [top - h, ...orderedCards.map((_, i) => top + i * h)];
+    };
+    const blocked = () => document.body.classList.contains('no-scroll');
+    let animating = false, startY = null, used = false, idle = null;
+    const animateTo = target => {
+      animating = true;
+      const from = window.scrollY, t0 = performance.now(), ms = 620;
+      const ease = t => 1 - Math.pow(1 - t, 3);
+      const step = now => {
+        const t = Math.min(1, (now - t0) / ms);
+        window.scrollTo({ top: from + (target - from) * ease(t), behavior:'instant' });
+        if (t < 1) requestAnimationFrame(step); else animating = false;
+      };
+      requestAnimationFrame(step);
+    };
+    const nearest = (list, y) => list.reduce((best, s, i) => Math.abs(s - y) < Math.abs(list[best] - y) ? i : best, 0);
+    const inZone = (list, y) => y >= list[0] - 4 && y <= list[list.length - 1] + 4;
+    window.addEventListener('touchstart', e => {
+      startY = e.touches.length === 1 ? e.touches[0].clientY : null;
+      used = false;
+      clearTimeout(idle);
+    }, { passive:true });
+    window.addEventListener('touchmove', e => {
+      if (startY === null || blocked()) return;
+      const list = stops(), y = window.scrollY;
+      if (!inZone(list, y)) return;
+      const d = startY - e.touches[0].clientY;
+      if (Math.abs(d) < 5) return;
+      const i = nearest(list, y), dir = Math.sign(d);
+      // no primeiro e no último ponto, o gesto para fora devolve a rolagem normal
+      if (!animating && !used && ((dir < 0 && i === 0) || (dir > 0 && i === list.length - 1))) { startY = null; return; }
+      if (e.cancelable) e.preventDefault();
+      if (!animating && !used && Math.abs(d) > 24) { used = true; animateTo(list[i + dir]); }
+    }, { passive:false });
+    window.addEventListener('touchend', () => { startY = null; }, { passive:true });
+    // chegando por rolagem normal, encaixa quando a página para
+    window.addEventListener('scroll', () => {
+      clearTimeout(idle);
+      if (animating || startY !== null || blocked()) return;
+      idle = setTimeout(() => {
+        const list = stops(), y = window.scrollY;
+        const last = list[list.length - 1], nearLast = y > last && y < last + orderedCards[0].offsetHeight * .2;
+        if (animating || startY !== null || blocked() || !(inZone(list, y) || nearLast)) return;
+        const s = list[nearest(list, y)];
+        if (Math.abs(s - y) > 2) animateTo(s);
+      }, 160);
+    }, { passive:true });
+  }
+
   /* ============ CLIENTS GRID ============ */
   const clientsGrid = document.getElementById('clientsGrid');
   CLIENTS.forEach((c, i) => {
