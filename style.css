@@ -393,6 +393,9 @@ main{
   border-top:1px solid rgba(243,238,228,.22);
   font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:rgba(243,238,228,.7);
 }
+.footer-credit{ color:rgba(243,238,228,.45); }
+.footer-credit a{ color:inherit; transition:color .3s var(--ease); }
+.footer-credit a:hover{ color:#F3EEE4; }
 @media (min-width:900px){
   .footer-top{ grid-template-columns:1.1fr 1fr; }
   .footer-cols{ justify-self:end; }
@@ -401,6 +404,10 @@ main{
 @media (max-width:699px){
   .footer-up{ display:none; }
   .footer-statement{ max-width:14ch; }
+  .footer-cols{ width:100%; box-sizing:border-box; gap:1rem; padding:1rem; }
+  .footer-col{ min-width:0; font-size:.95rem; padding-left:.8rem; }
+  .footer-col > a[href^="mailto"]{ font-size:.68rem; white-space:nowrap; }
+  .footer-base{ font-size:.58rem; letter-spacing:.12em; gap:.3rem 1rem; }
 }
 
 /* botões flutuantes somem quando o rodapé aparece */
