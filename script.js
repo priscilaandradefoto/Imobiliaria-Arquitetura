@@ -183,7 +183,6 @@
         <img src="${photos[0]}" alt="${p.name}" loading="lazy" decoding="async">
       </div>
       <div class="pf-meta">
-        <span class="pf-idx">${pad(i+1)}</span>
         <h3 class="pf-name">${p.name}</h3>
         ${mediaIcons(p)}
         <span class="pf-tags">${p.tags.join(' · ')}</span>
@@ -237,7 +236,6 @@
     const styles = [`max-width:${fit*100}%`, `max-height:${fit*100}%`];
     if (c.invert) styles.push('filter:invert(1)');
     div.innerHTML = `
-      <span class="client-index">${pad(i+1)}</span>
       <div class="client-mark">
         <img src="logos-padronizados/${c.file}" alt="Logo ${c.name}" loading="lazy" decoding="async" style="${styles.join(';')}">
       </div>
@@ -255,7 +253,6 @@
   /* ============ CASE OVERLAY ============ */
   const caseOverlay = document.getElementById('caseOverlay');
   const caseWatermark = document.getElementById('caseWatermark');
-  const caseIndex = document.getElementById('caseIndex');
   const caseTitle = document.getElementById('caseTitle');
   const caseTags = document.getElementById('caseTags');
   const caseGallery = document.getElementById('caseGallery');
@@ -292,8 +289,6 @@
     currentProject = project;
     lastFocused = document.activeElement;
 
-    const idx = PROJECTS.indexOf(project) + 1;
-    caseIndex.textContent = `Projeto ${pad(idx)} / ${pad(PROJECTS.length)}`;
     caseTitle.textContent = project.name;
     fitWatermark(project.name);
     caseTags.innerHTML = project.tags.map(t => `<span>${t}</span>`).join('');

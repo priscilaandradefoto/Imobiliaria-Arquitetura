@@ -286,15 +286,14 @@ body.sobre-shown #hero .hero-content{ opacity:0; }
   transition:transform .9s var(--ease);
 }
 .pf-meta{
-  display:grid; grid-template-columns:auto 1fr auto; gap:.2rem 1rem; align-items:baseline; padding-top:1rem;
+  display:grid; grid-template-columns:1fr auto; gap:.2rem 1rem; align-items:baseline; padding-top:1rem;
 }
-.pf-idx{ font-size:.75rem; color:var(--ink-faint); font-variant-numeric:tabular-nums; }
 .pf-name{
   font-family:var(--serif); font-weight:500; font-size:clamp(1.35rem,3vw,1.75rem);
   letter-spacing:-.005em; line-height:1.2; transition:color .4s var(--ease);
 }
 .pf-tags{
-  grid-column:2; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:500;
+  grid-column:1; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:500;
 }
 
 .pf-media{ display:inline-flex; align-items:center; gap:.55rem; color:var(--ink-soft); align-self:center; }
@@ -356,10 +355,6 @@ body.has-feature .stage > .sobre{ border-radius:clamp(1.25rem,3vw,2.5rem); }
   text-align:center;
 }
 .client-card--linked{ cursor:pointer; }
-.client-index{
-  position:absolute; top:.7rem; left:.8rem;
-  font-size:.68rem; color:var(--ink-faint); font-variant-numeric:tabular-nums; letter-spacing:.04em;
-}
 .client-mark{
   flex:1; width:100%; display:flex; align-items:center; justify-content:center; padding:1.1rem 0 .4rem;
 }
@@ -530,7 +525,6 @@ body.at-footer .whatsapp-float{ opacity:0; visibility:hidden; pointer-events:non
 }
 .case-inner{ position:relative; z-index:1; max-width:1280px; margin:0 auto; padding:6.5rem clamp(1.25rem,4vw,3rem) 6rem; }
 .case-head{ margin-bottom:2.5rem; }
-.case-index{ font-size:.78rem; letter-spacing:.1em; color:var(--gold); }
 .case-title{
   font-family:var(--serif); font-weight:500; font-size:clamp(2.4rem,7vw,4.6rem);
   letter-spacing:-.01em; margin:.4rem 0 1rem;
