@@ -124,7 +124,9 @@
       fTicking = false;
       const docH = document.documentElement.scrollHeight;
       const fh = footer.offsetHeight;
-      const p = Math.min(1, Math.max(0, (window.scrollY + window.innerHeight - (docH - fh)) / fh));
+      const raw = (window.scrollY + window.innerHeight - (docH - fh)) / fh;
+      const p = Math.min(1, Math.max(0, raw));
+      footer.classList.toggle('is-off', raw < -.5);
       footer.style.setProperty('--p', p.toFixed(3));
       document.body.classList.toggle('at-footer', p > .25);
     };
@@ -226,6 +228,24 @@
     window.addEventListener('resize', syncFeature);
     syncFeature();
   }
+
+  /* ============ CELULAR: só as fotos perto da tela ficam ativas ============ */
+  const phoneView = window.matchMedia('(max-width:899px)');
+  const orderedCards = gridProjects.map(p => gridEl.querySelector(`[data-id="${p.id}"]`));
+  const pfSheet = document.querySelector('.pf-sheet');
+  let cardsTicking = false;
+  const updateCards = () => {
+    cardsTicking = false;
+    const on = phoneView.matches;
+    const pin = parseFloat(getComputedStyle(orderedCards[0]).top) || 0;
+    const k = Math.floor((pin - gridEl.getBoundingClientRect().top) / (orderedCards[0].offsetHeight || window.innerHeight));
+    orderedCards.forEach((c, i) => c.classList.toggle('is-off', on && (i < k - 1 || i > k + 2)));
+    document.body.classList.toggle('past-stage', on && !!pfSheet && pfSheet.getBoundingClientRect().top < -200);
+  };
+  const onCardsScroll = () => { if (!cardsTicking) { cardsTicking = true; requestAnimationFrame(updateCards); } };
+  window.addEventListener('scroll', onCardsScroll, { passive:true });
+  window.addEventListener('resize', onCardsScroll);
+  updateCards();
 
   /* ============ CLIENTS GRID ============ */
   const clientsGrid = document.getElementById('clientsGrid');
