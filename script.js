@@ -136,7 +136,13 @@
     // o rodapé é fixo, então o link "Contato" rola até o fim da página
     const toFooter = e => {
       e.preventDefault();
-      window.scrollTo({ top: document.documentElement.scrollHeight, behavior:'smooth' });
+      const toEnd = () => window.scrollTo({ top: document.documentElement.scrollHeight, behavior:'smooth' });
+      toEnd();
+      // a página pode crescer enquanto as imagens carregam: confere o fim de novo
+      const again = [setTimeout(toEnd, 900), setTimeout(toEnd, 1800)];
+      const cancel = () => again.forEach(clearTimeout);
+      window.addEventListener('wheel', cancel, { once:true, passive:true });
+      window.addEventListener('touchstart', cancel, { once:true, passive:true });
     };
     document.querySelectorAll('a[href="#contato"]').forEach(a => a.addEventListener('click', toFooter));
     if (location.hash === '#contato') setTimeout(() => window.scrollTo(0, document.documentElement.scrollHeight), 300);
@@ -149,12 +155,24 @@
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
   /* ============ PORTFOLIO GRID ============ */
-  // ritmo de proporções das capas (retrato / paisagem / quadrado) para a grade ter variação, como numa galeria
-  const COVER_RHYTHM = ['4/5','3/2','3/2','4/5','1/1','4/5','3/2','1/1','3/2'];
+  const ICON_PHOTO = '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3.2L9 5.5h6L16.8 8H20a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13" r="3.6"/></svg>';
+  const ICON_VIDEO = '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="1.5"/><path d="m16 10.5 5-3v9l-5-3"/></svg>';
+  const hasVideo = p => !!(p.video || (p.groups && p.groups.some(g => g.video)));
+  const mediaIcons = p => {
+    const v = hasVideo(p);
+    return `<span class="pf-media" role="img" aria-label="${v ? 'Fotos e vídeo' : 'Fotos'}"><span title="Fotos">${ICON_PHOTO}</span>${v ? `<span title="Vídeo">${ICON_VIDEO}</span>` : ''}</span>`;
+  };
+  // TESTE: abrir o site com ?destaque mostra um projeto em tela cheia (o site normal não muda)
+  const featuredId = new URLSearchParams(location.search).has('destaque') ? 'imoveis-ferrari' : null;
+  const gridProjects = PROJECTS.filter(p => p.id !== featuredId);
+  // ritmo de proporções das capas (retrato / paisagem / quadrado), calculado para as 2 colunas terminarem juntas
+  const COVER_RHYTHM = featuredId
+    ? ['4/5','3/2','3/2','4/5','4/5','3/2','3/2','1/1']
+    : ['4/5','3/2','3/2','4/5','1/1','4/5','3/2','1/1','3/2'];
   const gridEl = document.getElementById('portfolioList');
   const gridCols = [document.createElement('div'), document.createElement('div')];
   gridCols.forEach(c => { c.className = 'pf-col'; gridEl.appendChild(c); });
-  PROJECTS.forEach((p, i) => {
+  gridProjects.forEach((p, i) => {
     const photos = projectPhotos(p);
     const card = document.createElement('article');
     card.className = 'pf-card';
@@ -167,12 +185,48 @@
       <div class="pf-meta">
         <span class="pf-idx">${pad(i+1)}</span>
         <h3 class="pf-name">${p.name}</h3>
+        ${mediaIcons(p)}
         <span class="pf-tags">${p.tags.join(' · ')}</span>
       </div>
     `;
     card.addEventListener('click', () => openCase(p.id));
     gridCols[i % 2].appendChild(card);
   });
+
+  /* ============ TESTE ?destaque: projeto em tela cheia, com o mesmo efeito do Sobre ============ */
+  if (featuredId && stage && sobreBand) {
+    const fp = PROJECTS.find(p => p.id === featuredId);
+    const sobreSec = stage.querySelector('.sobre');
+    const portfolioSec = document.getElementById('portfolio');
+    document.body.classList.add('has-feature');
+    const feat = document.createElement('a');
+    feat.className = 'pf-feature';
+    feat.href = '#' + fp.id;
+    feat.style.backgroundImage = `url('${projectPhotos(fp)[0]}')`;
+    feat.innerHTML = `
+      <div class="sobre-band-inner">
+        <span class="section-tag light">Projeto em destaque</span>
+        <h2 class="section-title sobre-title">${fp.name}</h2>
+        <p class="pf-feature-meta">${mediaIcons(fp)}<span>${fp.tags.join(' · ')}</span></p>
+      </div>`;
+    feat.addEventListener('click', e => { e.preventDefault(); openCase(fp.id); });
+    sobreBand.after(feat);
+    const spacer = document.createElement('div');
+    spacer.className = 'stage-spacer';
+    sobreSec.after(spacer);
+    const sheet = document.createElement('div');
+    sheet.className = 'pf-sheet';
+    spacer.after(sheet);
+    sheet.appendChild(portfolioSec);
+    // a foto troca no lugar quando a seção dos números passa do meio da tela
+    const syncFeature = () => {
+      const r = sobreSec.getBoundingClientRect();
+      document.body.classList.toggle('feature-shown', r.top + r.height / 2 <= window.innerHeight / 2);
+    };
+    window.addEventListener('scroll', syncFeature, { passive:true });
+    window.addEventListener('resize', syncFeature);
+    syncFeature();
+  }
 
   /* ============ CLIENTS GRID ============ */
   const clientsGrid = document.getElementById('clientsGrid');
@@ -275,7 +329,7 @@
       caseVideo.innerHTML = project.video ? `
         <div class="case-video-row">
           <div class="case-video-side">
-            <img src="${photos[0] || ''}" alt="" loading="lazy" decoding="async">
+            <img src="${photos[0] || ''}" alt="${project.name} — foto 1" loading="lazy" decoding="async">
           </div>
           <div class="case-video-frame" style="--video-ratio:${project.videoRatio || '9/16'}">
             <iframe src="https://player.vimeo.com/video/${project.video}?background=1&title=0&byline=0&portrait=0&autoplay=1&muted=1&loop=1"
@@ -283,7 +337,7 @@
               title="${project.name} — vídeo"></iframe>
           </div>
           <div class="case-video-side">
-            <img src="${photos[1] || ''}" alt="" loading="lazy" decoding="async">
+            <img src="${photos[1] || ''}" alt="${project.name} — foto 2" loading="lazy" decoding="async">
           </div>
         </div>
       ` : '';
@@ -298,7 +352,7 @@
         const videoRowHtml = `
           <div class="case-video-row">
             <div class="case-video-side">
-              <img src="${photos[cut-2] || ''}" alt="" loading="lazy" decoding="async">
+              <img src="${photos[cut-2] || ''}" alt="${project.name} — foto ${cut-1}" loading="lazy" decoding="async">
             </div>
             <div class="case-video-frame" style="--video-ratio:${project.video2Ratio || '9/16'}">
               <iframe src="https://player.vimeo.com/video/${project.video2}?background=1&title=0&byline=0&portrait=0&autoplay=1&muted=1&loop=1"
@@ -306,7 +360,7 @@
                 title="${project.name} — vídeo"></iframe>
             </div>
             <div class="case-video-side">
-              <img src="${photos[cut-1] || ''}" alt="" loading="lazy" decoding="async">
+              <img src="${photos[cut-1] || ''}" alt="${project.name} — foto ${cut}" loading="lazy" decoding="async">
             </div>
           </div>
         `;
