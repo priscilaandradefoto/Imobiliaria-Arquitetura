@@ -299,7 +299,7 @@ body.sobre-shown #hero .hero-content{ opacity:0; }
 .pf-media{ display:inline-flex; align-items:center; gap:.55rem; color:var(--ink-soft); align-self:center; }
 .pf-media > span{ display:inline-flex; }
 
-/* TESTE ?destaque: projeto em tela cheia, preso no lugar como a foto do Sobre */
+/* projeto em tela cheia, preso no lugar como a foto do Sobre */
 .pf-feature{
   position:sticky; top:0; z-index:2; margin-top:-100vh; margin-top:-100svh;
   height:100vh; height:100svh;

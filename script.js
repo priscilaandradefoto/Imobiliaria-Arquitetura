@@ -162,8 +162,8 @@
     const v = hasVideo(p);
     return `<span class="pf-media" role="img" aria-label="${v ? 'Fotos e vídeo' : 'Fotos'}"><span title="Fotos">${ICON_PHOTO}</span>${v ? `<span title="Vídeo">${ICON_VIDEO}</span>` : ''}</span>`;
   };
-  // TESTE: abrir o site com ?destaque mostra um projeto em tela cheia (o site normal não muda)
-  const featuredId = new URLSearchParams(location.search).has('destaque') ? 'imoveis-ferrari' : null;
+  // projeto mostrado em tela cheia antes da lista (null = nenhum, e ele volta para a grade)
+  const featuredId = 'imoveis-ferrari';
   const gridProjects = PROJECTS.filter(p => p.id !== featuredId);
   // ritmo de proporções das capas (retrato / paisagem / quadrado), calculado para as 2 colunas terminarem juntas
   const COVER_RHYTHM = featuredId
@@ -192,7 +192,7 @@
     gridCols[i % 2].appendChild(card);
   });
 
-  /* ============ TESTE ?destaque: projeto em tela cheia, com o mesmo efeito do Sobre ============ */
+  /* ============ PROJETO EM TELA CHEIA, com o mesmo efeito do Sobre ============ */
   if (featuredId && stage && sobreBand) {
     const fp = PROJECTS.find(p => p.id === featuredId);
     const sobreSec = stage.querySelector('.sobre');
