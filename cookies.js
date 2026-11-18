@@ -4,7 +4,7 @@
    A escolha fica só no navegador (localStorage, chave "pa-cookies"). */
 (function () {
   'use strict';
-  var GA_ID = '';            // ex.: 'G-XXXXXXXXXX' (preencher no item 6 do checklist)
+  var GA_ID = 'G-FHPYNVLS5F';   // Analytics da Priscila (stream "site")
   var KEY = 'pa-cookies';
 
   function ler() {
