@@ -447,23 +447,28 @@
       });
     }
 
-    const others = PROJECTS.filter(p => p.id !== project.id);
+    // os 3 projetos seguintes na lista (volta ao início no fim), assim cada página mostra um trio diferente
+    const current = PROJECTS.findIndex(p => p.id === project.id);
+    const nextProjects = [1, 2, 3].map(n => PROJECTS[(current + n) % PROJECTS.length]);
     caseMore.innerHTML = `
-      <span class="case-more-label">Outros projetos</span>
-      <div class="case-more-list">
-        ${others.map(p => `
-          <div class="case-more-item" data-id="${p.id}">
+      <span class="case-more-label">Mais projetos</span>
+      <div class="case-more-grid">
+        ${nextProjects.map(p => `
+          <a class="case-more-card" href="#${p.id}" data-id="${p.id}">
             <div class="case-more-thumb">
               <img src="${projectPhotos(p)[0]}" alt="" loading="lazy" decoding="async">
             </div>
-            <span class="case-more-name">${p.name}</span>
-            <span class="case-more-arrow">↗</span>
-          </div>
+            <div class="case-more-info">
+              <h3 class="case-more-name">${p.name}</h3>
+              ${mediaIcons(p)}
+              <span class="case-more-tags">${p.tags.join(' · ')}</span>
+            </div>
+          </a>
         `).join('')}
       </div>
     `;
-    caseMore.querySelectorAll('.case-more-item').forEach(item => {
-      item.addEventListener('click', () => openCase(item.dataset.id));
+    caseMore.querySelectorAll('.case-more-card').forEach(card => {
+      card.addEventListener('click', e => { e.preventDefault(); openCase(card.dataset.id); });
     });
 
     caseOverlay.classList.add('open');
