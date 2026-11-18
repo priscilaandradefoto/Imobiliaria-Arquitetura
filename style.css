@@ -411,8 +411,8 @@ main{
 }
 
 /* botões flutuantes somem quando o rodapé aparece */
-.instagram-float, .whatsapp-float{ transition:opacity .4s var(--ease), visibility .4s; }
-body.at-footer .instagram-float, body.at-footer .whatsapp-float{ opacity:0; visibility:hidden; pointer-events:none; }
+.whatsapp-float{ transition:opacity .4s var(--ease), visibility .4s; }
+body.at-footer .whatsapp-float{ opacity:0; visibility:hidden; pointer-events:none; }
 
 /* ============ WHATSAPP FLOAT ============ */
 .whatsapp-float{
@@ -424,16 +424,6 @@ body.at-footer .instagram-float, body.at-footer .whatsapp-float{ opacity:0; visi
 }
 .whatsapp-float:hover{ transform:scale(1.08); box-shadow:0 14px 32px -6px rgba(37,211,102,.7); }
 
-/* ============ INSTAGRAM FLOAT ============ */
-.instagram-float{
-  position:fixed; right:1.25rem; bottom:3.75rem; z-index:300;
-  width:34px; height:34px; border-radius:50%; color:#fff;
-  background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
-  display:flex; align-items:center; justify-content:center;
-  box-shadow:0 10px 26px -6px rgba(214,36,159,.5);
-  transition:transform .35s var(--ease), box-shadow .35s var(--ease);
-}
-.instagram-float:hover{ transform:scale(1.08); box-shadow:0 14px 32px -6px rgba(214,36,159,.65); }
 
 /* ============ CASE OVERLAY ============ */
 .case-overlay{
