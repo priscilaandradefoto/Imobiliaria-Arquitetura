@@ -303,12 +303,7 @@ body.sobre-shown #hero .hero-content{ opacity:0; }
 @media (max-width:899px){
   .portfolio{ padding:0; }
   .portfolio-heading{ display:none; }
-  /* o espaço entre os cards é o tempo de leitura: a foto fica parada antes da próxima subir */
-  .pf-grid{ gap:45vh; gap:45svh; }
-  .stage > .sobre + .stage-spacer{ height:145vh; height:145svh; }
-  /* teste ?encaixe: um deslize troca de projeto, então a pausa na rolagem não é necessária */
-  body.snap-on .pf-grid{ gap:0; }
-  body.snap-on .stage > .sobre + .stage-spacer{ height:100vh; height:100svh; }
+  .pf-grid{ gap:0; }
   .pf-card{
     position:sticky; top:0; z-index:calc(var(--i) + 1); overflow:hidden;
     height:100vh; height:100svh; background:#14120f;

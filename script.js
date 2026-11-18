@@ -254,10 +254,8 @@
   window.addEventListener('resize', onCardsScroll);
   updateCards();
 
-  /* ============ TESTE ?encaixe (celular): um deslize sobe o próximo projeto e encaixa na tela ============ */
-  if (new URLSearchParams(location.search).has('encaixe') && phoneView.matches && orderedCards.length) {
-    document.body.classList.add('snap-on');
-    updateCards();
+  /* ============ CELULAR: um deslize sobe o próximo projeto e encaixa na tela ============ */
+  if (phoneView.matches && orderedCards.length) {
     const stops = () => {
       const h = orderedCards[0].offsetHeight, top = gridEl.getBoundingClientRect().top + window.scrollY;
       return [top - h, ...orderedCards.map((_, i) => top + i * h)];
