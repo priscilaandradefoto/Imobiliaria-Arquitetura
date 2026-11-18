@@ -301,18 +301,14 @@ body.sobre-shown #hero .hero-content{ opacity:0; }
 
 /* celular: cada projeto em tela cheia, uma foto subindo sobre a outra */
 @media (max-width:899px){
-  .portfolio{ --pf-bar:3.75rem; padding:0; }
-  /* faixa "Portfólio" fica parada no topo enquanto as fotos passam por baixo */
-  .portfolio-heading{
-    position:sticky; top:0; z-index:20; height:var(--pf-bar); margin:0;
-    display:flex; align-items:center; padding:0 clamp(1.25rem,4vw,3rem);
-    background:var(--bg);
-  }
-  .portfolio-heading .section-tag{ margin:0; }
-  .pf-grid{ gap:0; }
+  .portfolio{ padding:0; }
+  .portfolio-heading{ display:none; }
+  /* o espaço entre os cards é o tempo de leitura: a foto fica parada antes da próxima subir */
+  .pf-grid{ gap:45vh; gap:45svh; }
+  .stage > .sobre + .stage-spacer{ height:145vh; height:145svh; }
   .pf-card{
-    position:sticky; top:var(--pf-bar); z-index:calc(var(--i) + 1); overflow:hidden;
-    height:calc(100vh - var(--pf-bar)); height:calc(100svh - var(--pf-bar)); background:#14120f;
+    position:sticky; top:0; z-index:calc(var(--i) + 1); overflow:hidden;
+    height:100vh; height:100svh; background:#14120f;
   }
   /* só as fotos perto da tela ficam ativas: empilhar todas fazia o celular misturar pedaços */
   .pf-card.is-off{ visibility:hidden; }

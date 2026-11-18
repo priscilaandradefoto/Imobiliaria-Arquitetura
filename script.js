@@ -41,15 +41,22 @@
 
   /* ============ HEADER SCROLL STATE ============ */
   const header = document.getElementById('siteHeader');
-  // menu some ao rolar pra baixo e volta ao rolar pra cima
+  // no hero e na foto do Sobre o menu fica transparente e parado;
+  // depois disso some ao rolar pra baixo e volta com cor ao rolar pra cima
+  const headerStage = document.getElementById('stage');
   let lastY = window.scrollY;
   const onScroll = () => {
     const y = window.scrollY;
-    header.classList.toggle('scrolled', y > 40);
-    if (document.body.classList.contains('nav-open') || y < 80) header.classList.remove('is-hidden');
-    else if (y > lastY + 6) header.classList.add('is-hidden');
-    else if (y < lastY - 6) header.classList.remove('is-hidden');
-    if (Math.abs(y - lastY) > 6) lastY = y;
+    const zone = headerStage ? headerStage.offsetTop + window.innerHeight + 4 : 40;
+    const down = y > lastY + 6, up = y < lastY - 6;
+    if (document.body.classList.contains('nav-open')) header.classList.remove('is-hidden');
+    else if (y <= zone) header.classList.remove('is-hidden', 'scrolled');
+    else if (down) header.classList.add('is-hidden');
+    else {
+      if (up) header.classList.remove('is-hidden');
+      if (!header.classList.contains('is-hidden')) header.classList.add('scrolled');
+    }
+    if (down || up) lastY = y;
   };
   onScroll();
   window.addEventListener('scroll', onScroll, { passive:true });
@@ -237,8 +244,8 @@
   const updateCards = () => {
     cardsTicking = false;
     const on = phoneView.matches;
-    const pin = parseFloat(getComputedStyle(orderedCards[0]).top) || 0;
-    const k = Math.floor((pin - gridEl.getBoundingClientRect().top) / (orderedCards[0].offsetHeight || window.innerHeight));
+    const step = (orderedCards[0].offsetHeight || window.innerHeight) + (parseFloat(getComputedStyle(gridEl).rowGap) || 0);
+    const k = Math.floor(-gridEl.getBoundingClientRect().top / step);
     orderedCards.forEach((c, i) => c.classList.toggle('is-off', on && (i < k - 1 || i > k + 2)));
     document.body.classList.toggle('past-stage', on && !!pfSheet && pfSheet.getBoundingClientRect().top < -200);
   };
