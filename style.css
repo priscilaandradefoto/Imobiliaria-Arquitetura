@@ -299,6 +299,34 @@ body.sobre-shown #hero .hero-content{ opacity:0; }
 .pf-media{ display:inline-flex; align-items:center; gap:.55rem; color:var(--ink-soft); align-self:center; }
 .pf-media > span{ display:inline-flex; }
 
+/* celular: cada projeto em tela cheia, uma foto subindo sobre a outra */
+@media (max-width:899px){
+  .portfolio{ padding-left:0; padding-right:0; padding-bottom:0; }
+  .portfolio-heading{ padding:0 clamp(1.25rem,4vw,3rem); }
+  .pf-grid{ gap:0; }
+  .pf-card{
+    position:sticky; top:0; z-index:calc(var(--i) + 1); overflow:hidden;
+    height:100vh; height:100svh;
+    border-radius:22px 22px 0 0; box-shadow:0 -22px 44px -24px rgba(0,0,0,.6);
+  }
+  .pf-img{ position:absolute; inset:0; height:100%; aspect-ratio:auto !important; }
+  .pf-meta{
+    position:absolute; left:0; right:0; bottom:0; z-index:2; color:#fff;
+    grid-template-columns:minmax(0,1fr) auto;
+    padding:5rem clamp(1.25rem,4vw,3rem) 5rem;
+  }
+  /* faixa escura translúcida atrás das informações, igual em todas as fotos */
+  .pf-meta::before{
+    content:''; position:absolute; inset:0; z-index:-1;
+    background:linear-gradient(0deg,rgba(12,10,8,.9) 0%,rgba(12,10,8,.78) 50%,rgba(12,10,8,.4) 78%,rgba(12,10,8,0) 100%);
+    backdrop-filter:blur(5px); -webkit-backdrop-filter:blur(5px);
+    -webkit-mask-image:linear-gradient(0deg,#000 62%,transparent); mask-image:linear-gradient(0deg,#000 62%,transparent);
+  }
+  .pf-name{ font-size:clamp(1.1rem,6.1vw,2.2rem); white-space:nowrap; }
+  .pf-tags{ grid-column:1 / -1; color:#e6c99a; font-size:clamp(.6rem,2.75vw,.72rem); letter-spacing:.1em; white-space:nowrap; }
+  .pf-media{ color:#fff; }
+}
+
 /* projeto em tela cheia, preso no lugar como a foto do Sobre */
 .pf-feature{
   position:sticky; top:0; z-index:2; margin-top:-100vh; margin-top:-100svh;
