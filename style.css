@@ -407,10 +407,6 @@ body.has-feature .stage > .sobre{ border-radius:clamp(1.25rem,3vw,2.5rem); }
 .client-cat{
   font-size:.64rem; color:rgba(27,26,24,.62); letter-spacing:.02em;
 }
-.client-city{
-  margin-top:.25rem; font-size:.6rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
-  color:var(--gold);
-}
 @media (hover:hover){
   .client-card--linked:hover .client-mark img{ transform:scale(1.06); }
   .client-card--linked:hover .client-name{ color:var(--gold); }

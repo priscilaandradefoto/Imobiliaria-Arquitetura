@@ -9,9 +9,9 @@
       { label:'Ambientação 03', before:'ambientacao-ia/ambientacao-ia-252-antes.jpg', after:'ambientacao-ia/ambientacao-ia-252-depois.jpg', video:'1216430974', videoRatio:'360/240' },
       { label:'Ambientação 04', before:'ambientacao-ia/ambientacao-ia-0377-antes.jpg', after:'ambientacao-ia/ambientacao-ia-0377-depois.jpg', video:'1216431147', videoRatio:'360/240' },
     ]},
-    { id:'imoveis-ferrari', name:'Imóveis Ferrari', city:'Itapema', tags:['Itapema','Imóveis','Still','Vídeo'], folder:'imoveis-ferrari', count:33, video:'1219621575', videoRatio:'240/426' },
+    { id:'imoveis-ferrari', name:'Imóveis Ferrari', tags:['Imóveis','Still','Vídeo'], folder:'imoveis-ferrari', count:33, video:'1219621575', videoRatio:'240/426' },
     { id:'imovel-a', name:'Imóvel A', tags:['Residencial','Still','Vídeo'], folder:'imovel-a', count:16, video:'1215884469', videoRatio:'240/426', fillLastRow:true },
-    { id:'jana-invest', name:'Jana Invest', city:'Itapema', tags:['Itapema','Imóveis de Luxo','Still'], folder:'jana-invest', count:19 },
+    { id:'jana-invest', name:'Jana Invest', tags:['Imóveis de Luxo','Residencial','Still'], folder:'jana-invest', count:19 },
     { id:'kora', name:'Kora', tags:['Arquitetura','Residencial','Vídeo'], folder:'kora', count:13, video:'1222385358', videoRatio:'240/426', fillLastRow:true },
     { id:'lucia-haddad', name:'Lúcia Haddad', tags:['Imóveis de Luxo','Still'], folder:'lucia-haddad', count:7 },
     { id:'mavesol', name:'Mavesol', tags:['Imóveis','Residencial'], folder:'mavesol', count:4 },
@@ -25,8 +25,8 @@
     { name:'Casas Bacanas', cat:'Imobiliária', file:'mono/casas-bacanas.png', fit:.66 },
     { name:'Chaves Imobiliária', cat:'Serviços Imobiliários', file:'mono/chaves-imobiliaria.png' },
     { name:'Dicastanha', cat:'Fotografia Imobiliária', file:'mono/dicastanha.png', fit:.62 },
-    { name:'Imóveis Ferrari', cat:'Imobiliária', file:'mono/imoveis-ferrari.png', project:'imoveis-ferrari', fit:.72, city:'Itapema · SC' },
-    { name:'Jana Invest', cat:'Negócios & Ativos', file:'mono/jana-invest.png', project:'jana-invest', fit:.8, city:'Itapema · SC' },
+    { name:'Imóveis Ferrari', cat:'Imobiliária', file:'mono/imoveis-ferrari.png', project:'imoveis-ferrari', fit:.72 },
+    { name:'Jana Invest', cat:'Negócios & Ativos', file:'mono/jana-invest.png', project:'jana-invest', fit:.8 },
     { name:'Legacy Brokers', cat:'Brokers', file:'mono/legacy-brokers.png' },
     { name:'Lúcia Haddad', cat:'Imóveis de Luxo', file:'mono/lucia-haddad.png', project:'lucia-haddad' },
     { name:'Mavesol', cat:'Imóveis', file:'mono/mavesol.png', project:'mavesol' },
@@ -37,8 +37,6 @@
   ];
 
   const pad = n => String(n).padStart(2,'0');
-  // nome usado no texto alternativo das fotos (com a cidade, quando informada)
-  const altName = p => p.city ? `${p.name} em ${p.city}, SC` : p.name;
   const projectPhotos = p => p.groups
     ? p.groups.flatMap(g => [g.after, g.before])
     : Array.from({length:p.count}, (_,i) => `${p.folder}/${p.folder}-${pad(i+1)}.jpg`);
@@ -196,7 +194,7 @@
     card.style.setProperty('--i', i);
     card.innerHTML = `
       <div class="pf-img" style="aspect-ratio:${COVER_RHYTHM[i % COVER_RHYTHM.length]}">
-        <img src="${photos[0]}" alt="${altName(p)}" loading="lazy" decoding="async">
+        <img src="${photos[0]}" alt="${p.name}" loading="lazy" decoding="async">
       </div>
       <div class="pf-meta">
         <h3 class="pf-name">${p.name}</h3>
@@ -330,7 +328,6 @@
       <div class="client-caption">
         <span class="client-name">${c.name}</span>
         <span class="client-cat">${c.cat}</span>
-        ${c.city ? `<span class="client-city">${c.city}</span>` : ''}
       </div>
     `;
     if (c.project) {
@@ -436,7 +433,7 @@
       caseVideo.innerHTML = project.video ? `
         <div class="case-video-row">
           <div class="case-video-side">
-            <img src="${photos[0] || ''}" alt="${altName(project)} — foto 1" loading="lazy" decoding="async">
+            <img src="${photos[0] || ''}" alt="${project.name} — foto 1" loading="lazy" decoding="async">
           </div>
           <div class="case-video-frame" style="--video-ratio:${project.videoRatio || '9/16'}">
             <iframe src="https://player.vimeo.com/video/${project.video}?background=1&title=0&byline=0&portrait=0&autoplay=1&muted=1&loop=1"
@@ -444,13 +441,13 @@
               title="${project.name} — vídeo"></iframe>
           </div>
           <div class="case-video-side">
-            <img src="${photos[1] || ''}" alt="${altName(project)} — foto 2" loading="lazy" decoding="async">
+            <img src="${photos[1] || ''}" alt="${project.name} — foto 2" loading="lazy" decoding="async">
           </div>
         </div>
       ` : '';
       const figuresHtml = photos.map((src, i) => `
         <figure data-index="${i}"${(project.fillLastRow && i === photos.length - 1) ? ' class="fill-row"' : ''}>
-          <img src="${src}" alt="${altName(project)} — foto ${i+1}" loading="lazy" decoding="async">
+          <img src="${src}" alt="${project.name} — foto ${i+1}" loading="lazy" decoding="async">
         </figure>
       `);
       caseVideo2.innerHTML = '';
@@ -459,7 +456,7 @@
         const videoRowHtml = `
           <div class="case-video-row">
             <div class="case-video-side">
-              <img src="${photos[cut-2] || ''}" alt="${altName(project)} — foto ${cut-1}" loading="lazy" decoding="async">
+              <img src="${photos[cut-2] || ''}" alt="${project.name} — foto ${cut-1}" loading="lazy" decoding="async">
             </div>
             <div class="case-video-frame" style="--video-ratio:${project.video2Ratio || '9/16'}">
               <iframe src="https://player.vimeo.com/video/${project.video2}?background=1&title=0&byline=0&portrait=0&autoplay=1&muted=1&loop=1"
@@ -467,7 +464,7 @@
                 title="${project.name} — vídeo"></iframe>
             </div>
             <div class="case-video-side">
-              <img src="${photos[cut-1] || ''}" alt="${altName(project)} — foto ${cut}" loading="lazy" decoding="async">
+              <img src="${photos[cut-1] || ''}" alt="${project.name} — foto ${cut}" loading="lazy" decoding="async">
             </div>
           </div>
         `;
