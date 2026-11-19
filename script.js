@@ -25,8 +25,8 @@
     { name:'Casas Bacanas', cat:'Imobiliária', file:'mono/casas-bacanas.png', fit:.66 },
     { name:'Chaves Imobiliária', cat:'Serviços Imobiliários', file:'mono/chaves-imobiliaria.png' },
     { name:'Dicastanha', cat:'Fotografia Imobiliária', file:'mono/dicastanha.png', fit:.62 },
-    { name:'Imóveis Ferrari', cat:'Imobiliária', file:'mono/imoveis-ferrari.png', project:'imoveis-ferrari', fit:.72 },
-    { name:'Jana Invest', cat:'Negócios & Ativos', file:'mono/jana-invest.png', project:'jana-invest', fit:.8 },
+    { name:'Imóveis Ferrari', cat:'Imobiliária', file:'mono/imoveis-ferrari.png', project:'imoveis-ferrari', fit:.72, city:'Itapema · SC' },
+    { name:'Jana Invest', cat:'Negócios & Ativos', file:'mono/jana-invest.png', project:'jana-invest', fit:.8, city:'Itapema · SC' },
     { name:'Legacy Brokers', cat:'Brokers', file:'mono/legacy-brokers.png' },
     { name:'Lúcia Haddad', cat:'Imóveis de Luxo', file:'mono/lucia-haddad.png', project:'lucia-haddad' },
     { name:'Mavesol', cat:'Imóveis', file:'mono/mavesol.png', project:'mavesol' },
@@ -330,6 +330,7 @@
       <div class="client-caption">
         <span class="client-name">${c.name}</span>
         <span class="client-cat">${c.cat}</span>
+        ${c.city ? `<span class="client-city">${c.city}</span>` : ''}
       </div>
     `;
     if (c.project) {
