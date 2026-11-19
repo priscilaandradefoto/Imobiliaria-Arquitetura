@@ -377,7 +377,7 @@ body.has-feature .stage > .sobre{ border-radius:clamp(1.25rem,3vw,2.5rem); }
   .clients-grid{ --cols:3; }
 }
 @media (min-width:900px){
-  .clients-grid{ --cols:5; }
+  .clients-grid{ --cols:7; }
 }
 .clients-row{ display:flex; justify-content:center; width:100%; }
 .client-card{
