@@ -377,21 +377,24 @@ body.has-feature .stage > .sobre{ border-radius:clamp(1.25rem,3vw,2.5rem); }
   .clients-grid{ --cols:3; }
 }
 @media (min-width:900px){
-  .clients-grid{ --cols:6; }
+  .clients-grid{ --cols:5; }
 }
+.clients-row{ display:flex; justify-content:center; width:100%; }
 .client-card{
-  position:relative; background:var(--bg);
-  width:calc(100% / var(--cols)); aspect-ratio:1/1;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  padding:.8rem;
-  border:1px solid rgba(27,26,24,.14); margin:0 -1px -1px 0;
+  position:relative;
+  width:calc(100% / var(--cols));
+  display:flex; flex-direction:column; align-items:center;
+  padding:.4rem; margin-bottom:.6rem;
   box-sizing:border-box;
   text-align:center;
 }
 .client-card--linked{ cursor:pointer; }
 .client-mark{
-  flex:1; width:100%; display:flex; align-items:center; justify-content:center; padding:1.1rem 0 .4rem;
+  width:100%; aspect-ratio:1/1; box-sizing:border-box;
+  display:flex; align-items:center; justify-content:center; padding:.8rem;
+  background:var(--bg); border:1px solid rgba(27,26,24,.14);
 }
+.client-caption{ margin-top:.7rem; }
 .client-mark img{
   max-width:100%; max-height:100%; object-fit:contain;
   transition:transform .5s var(--ease);

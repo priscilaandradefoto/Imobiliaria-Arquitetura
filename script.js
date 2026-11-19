@@ -314,6 +314,7 @@
 
   /* ============ CLIENTS GRID ============ */
   const clientsGrid = document.getElementById('clientsGrid');
+  const clientCards = [];
   CLIENTS.forEach((c, i) => {
     const div = document.createElement('div');
     div.className = 'client-card' + (c.project ? ' client-card--linked' : '');
@@ -332,8 +333,31 @@
     if (c.project) {
       div.addEventListener('click', () => openCase(c.project));
     }
-    clientsGrid.appendChild(div);
+    clientCards.push(div);
   });
+  // linhas equilibradas: o máximo por linha vem do CSS (--cols) e as sobras vão para as primeiras linhas
+  // (ex.: 13 logos no desktop = 5 + 4 + 4)
+  function layoutClients() {
+    const max = parseInt(getComputedStyle(clientsGrid).getPropertyValue('--cols'), 10) || 5;
+    const n = clientCards.length, rows = Math.ceil(n / max);
+    const base = Math.floor(n / rows), extra = n % rows;
+    clientsGrid.replaceChildren();
+    let k = 0;
+    for (let r = 0; r < rows; r++) {
+      const row = document.createElement('div');
+      row.className = 'clients-row';
+      const size = base + (r < extra ? 1 : 0);
+      for (let j = 0; j < size; j++) row.appendChild(clientCards[k++]);
+      clientsGrid.appendChild(row);
+    }
+  }
+  let clientsCols = null;
+  const syncClients = () => {
+    const c = getComputedStyle(clientsGrid).getPropertyValue('--cols');
+    if (c !== clientsCols) { clientsCols = c; layoutClients(); }
+  };
+  syncClients();
+  window.addEventListener('resize', syncClients);
 
   /* ============ CASE OVERLAY ============ */
   const caseOverlay = document.getElementById('caseOverlay');
