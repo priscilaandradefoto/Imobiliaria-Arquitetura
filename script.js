@@ -9,8 +9,9 @@
       { label:'Ambientação 03', before:'ambientacao-ia/ambientacao-ia-252-antes.jpg', after:'ambientacao-ia/ambientacao-ia-252-depois.jpg', video:'1216430974', videoRatio:'360/240' },
       { label:'Ambientação 04', before:'ambientacao-ia/ambientacao-ia-0377-antes.jpg', after:'ambientacao-ia/ambientacao-ia-0377-depois.jpg', video:'1216431147', videoRatio:'360/240' },
     ]},
-    { id:'imoveis-ferrari', name:'Imóveis Ferrari', tags:['Imóveis','Still','Vídeo'], folder:'imoveis-ferrari', count:15, video:'1219621575', videoRatio:'240/426' },
+    { id:'imoveis-ferrari', name:'Imóveis Ferrari', tags:['Imóveis','Still','Vídeo'], folder:'imoveis-ferrari', count:33, video:'1219621575', videoRatio:'240/426' },
     { id:'imovel-a', name:'Imóvel A', tags:['Residencial','Still','Vídeo'], folder:'imovel-a', count:16, video:'1215884469', videoRatio:'240/426', fillLastRow:true },
+    { id:'jana-invest', name:'Jana Invest', tags:['Imóveis de Luxo','Residencial','Still'], folder:'jana-invest', count:19 },
     { id:'kora', name:'Kora', tags:['Arquitetura','Residencial','Vídeo'], folder:'kora', count:13, video:'1222385358', videoRatio:'240/426', fillLastRow:true },
     { id:'lucia-haddad', name:'Lúcia Haddad', tags:['Imóveis de Luxo','Still'], folder:'lucia-haddad', count:7 },
     { id:'mavesol', name:'Mavesol', tags:['Imóveis','Residencial'], folder:'mavesol', count:4 },
@@ -25,6 +26,7 @@
     { name:'Chaves Imobiliária', cat:'Serviços Imobiliários', file:'mono/chaves-imobiliaria.png' },
     { name:'Dicastanha', cat:'Fotografia Imobiliária', file:'mono/dicastanha.png', fit:.62 },
     { name:'Imóveis Ferrari', cat:'Imobiliária', file:'mono/imoveis-ferrari.png', project:'imoveis-ferrari', fit:.72 },
+    { name:'Jana Invest', cat:'Negócios & Ativos', file:'mono/jana-invest.png', project:'jana-invest', fit:.8 },
     { name:'Legacy Brokers', cat:'Brokers', file:'mono/legacy-brokers.png' },
     { name:'Lúcia Haddad', cat:'Imóveis de Luxo', file:'mono/lucia-haddad.png', project:'lucia-haddad' },
     { name:'Mavesol', cat:'Imóveis', file:'mono/mavesol.png', project:'mavesol' },
@@ -172,12 +174,15 @@
     return `<span class="pf-media" role="img" aria-label="${v ? 'Fotos e vídeo' : 'Fotos'}"><span title="Fotos">${ICON_PHOTO}</span>${v ? `<span title="Vídeo">${ICON_VIDEO}</span>` : ''}</span>`;
   };
   // projeto mostrado em tela cheia antes da lista (null = nenhum, e ele volta para a grade)
-  const featuredId = 'imoveis-ferrari';
+  const featuredId = 'jana-invest';
   const gridProjects = PROJECTS.filter(p => p.id !== featuredId);
   // ritmo de proporções das capas (retrato / paisagem / quadrado), calculado para as 2 colunas terminarem juntas
-  const COVER_RHYTHM = featuredId
-    ? ['4/5','3/2','3/2','4/5','4/5','3/2','3/2','1/1']
-    : ['4/5','3/2','3/2','4/5','1/1','4/5','3/2','1/1','3/2'];
+  // (um ritmo por quantidade de projetos na grade)
+  const COVER_RHYTHMS = {
+    8: ['4/5','3/2','3/2','4/5','4/5','3/2','3/2','1/1'],
+    9: ['4/5','3/2','3/2','4/5','1/1','4/5','3/2','1/1','3/2'],
+  };
+  const COVER_RHYTHM = COVER_RHYTHMS[gridProjects.length] || COVER_RHYTHMS[9];
   const gridEl = document.getElementById('portfolioList');
   const gridCols = [document.createElement('div'), document.createElement('div')];
   gridCols.forEach(c => { c.className = 'pf-col'; gridEl.appendChild(c); });
